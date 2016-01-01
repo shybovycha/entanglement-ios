@@ -1,3 +1,4 @@
+import Darwin
 
 class Cell {
     var connections: [(Int, Int)] = []
@@ -45,6 +46,16 @@ class Cell {
     // draw connections
     func render() {
         print("*", terminator: "")
+    }
+
+    func toString() -> String {
+        var res = ""
+
+        for (a, b) in self.connections {
+            res += "(\(a), \(b))"
+        }
+
+        return res
     }
 }
 
@@ -135,7 +146,47 @@ class Field {
     }
 }
 
-class Game {}
+class Game {
+    var field: Field = Field()
+    var pocket: Cell = Cell()
 
-var field: Field = Field()
-field.render()
+    init() {
+        self.pocket = self.generateCell()
+    }
+
+    func generateCell() -> Cell {
+        let cell = Cell()
+
+        var pool = [Int](0...11)
+
+        for _ in 0...5 {
+            var i = Int(arc4random_uniform(UInt32(pool.count)))
+            let a = pool[i]
+            pool.removeAtIndex(i)
+            i = Int(arc4random_uniform(UInt32(pool.count)))
+            let b = pool[i]
+            pool.removeAtIndex(i)
+
+            cell.connections.append((a, b))
+        }
+
+        return cell
+    }
+}
+
+// var field: Field = Field()
+// field.render()
+
+var game = Game()
+
+var cell = game.generateCell()
+
+print(cell.toString())
+
+game.field.placeCell(cell)
+
+cell = game.generateCell()
+
+print(cell.toString())
+
+game.field.placeCell(cell)
