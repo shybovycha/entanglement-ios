@@ -1,6 +1,6 @@
 import Darwin
 
-class Cell {
+class Tile {
     var connections: [(Int, Int)] = []
 
     func output(input: Int) -> Int {
@@ -59,7 +59,7 @@ class Cell {
     }
 }
 
-class ZeroCell : Cell {
+class ZeroTile : Tile {
     override init() {
         super.init()
 
@@ -71,21 +71,21 @@ class ZeroCell : Cell {
     }
 }
 
-class BorderCell : Cell {
+class BorderTile : Tile {
     // draw wall
     override func render() {
         print("x", terminator: "")
     }
 }
 
-class NullCell : Cell {
+class NullTile : Tile {
     // draw an empty space
     override func render() {
         print("o", terminator: "")
     }
 }
 
-class NonEmptyCell : Cell {
+class NonEmptyTile : Tile {
 
 }
 
@@ -102,35 +102,61 @@ class PathItem {
     }
 }
 
+class Path {
+    var items: [PathItem] = []
+
+    init(centerU u: Int, centerV v: Int) {
+        self.expand(u, v: v, input: 0, output: 0)
+    }
+
+    func expand(u: Int, v: Int, input: Int, output: Int) {
+        self.items.append(PathItem(u: u, v: v, input: input, output: output))
+    }
+
+    func toString() -> String {
+        var res = "x"
+
+        for item in self.items {
+            res += " -> [\(item.u), \(item.v)] \(item.input) -> \(item.output)"
+        }
+
+        return res
+    }
+
+    func lastOutput() -> Int {
+        return self.items.last!.output
+    }
+}
+
 class Field {
-    var cells: [[Cell]] = []
-    var path: [PathItem] = [PathItem(u: 4, v: 4, input: 0, output: 0)]
+    var tiles: [[Tile]] = []
+    var path: Path = Path(centerU: 4, centerV: 4)
     var nextPlace: (Int, Int) = (5, 5)
     var pathFinished: Bool = false
 
     init() {
-        self.cells = []
+        self.tiles = []
 
         for i in 0...8 {
-            self.cells.append([])
+            self.tiles.append([])
 
             for _ in 0...8 {
-                self.cells[i].append(NullCell())
+                self.tiles[i].append(NullTile())
             }
         }
 
-        self.cells[4][4] = ZeroCell()
+        self.tiles[4][4] = ZeroTile()
 
         for i in 0...4 {
-            self.cells[0][i] = BorderCell()
-            self.cells[i][0] = BorderCell()
-            self.cells[8][i + 4] = BorderCell()
-            self.cells[i + 4][8] = BorderCell()
+            self.tiles[0][i] = BorderTile()
+            self.tiles[i][0] = BorderTile()
+            self.tiles[8][i + 4] = BorderTile()
+            self.tiles[i + 4][8] = BorderTile()
         }
 
         for i in 1...4 {
-            self.cells[i][i + 4] = BorderCell()
-            self.cells[i + 4][i] = BorderCell()
+            self.tiles[i][i + 4] = BorderTile()
+            self.tiles[i + 4][i] = BorderTile()
         }
     }
 
@@ -138,7 +164,7 @@ class Field {
         var u: Int, v: Int
         (u, v) = self.nextPlace
 
-        let output: Int = self.path.last!.output
+        let output: Int = self.path.lastOutput()
 
         switch output {
         case 0, 1:
@@ -162,61 +188,93 @@ class Field {
         return self.pathFinished
     }
 
-    func placeCell(cell: NonEmptyCell) {
+    func placeTile(tile: NonEmptyTile) {
         var u: Int, v: Int
 
         (u, v) = self.nextPlace
-        self.cells[u][v] = cell
+        self.tiles[u][v] = tile
 
-        while self.cells[u][v] is NonEmptyCell {
-            let lastOutput: Int = self.path.last!.output
+        while self.tiles[u][v] is NonEmptyTile {
+            let lastOutput: Int = self.path.lastOutput()
 
-            self.path.append(PathItem(u: u, v: v, input: self.cells[u][v].input(lastOutput), output: self.cells[u][v].outputFromNeighbourOutput(lastOutput)))
+            self.path.expand(u, v: v, input: self.tiles[u][v].input(lastOutput), output: self.tiles[u][v].outputFromNeighbourOutput(lastOutput))
 
             self.nextPlace = self.findNextPlace()
             (u, v) = self.nextPlace
         }
 
-        if self.cells[u][v] is ZeroCell || self.cells[u][v] is BorderCell {
+        if self.tiles[u][v] is ZeroTile || self.tiles[u][v] is BorderTile {
             self.pathFinished = true
         }
     }
 
     func render() {
-        for row in self.cells {
-            for cell in row {
-                cell.render()
+        for row in self.tiles {
+            for tile in row {
+                tile.render()
             }
 
             print("")
         }
     }
+}
 
-    func pathToString() -> String {
-        var res = ""
-
-        for item in self.path {
-            res += " -> [\(item.u), \(item.v)] \(item.input) -> \(item.output)"
-        }
-
-        return res
-    }
+enum GameError : ErrorType {
+    case GameOver
 }
 
 class Game {
     var field: Field = Field()
-    var pocket: Cell = Cell()
-
-    init() {
-        self.pocket = self.generateCell()
+    var pocket: NonEmptyTile = NonEmptyTile()
+    var nextTile: NonEmptyTile = NonEmptyTile()
+    var state: String {
+        return "Is over: \(self.isGameOver())\nNext tile: \(self.nextTile.toString())\nPocket: \(self.pocket.toString())\nPath: \(self.field.path.toString())"
     }
 
-    func isGameEnded() -> Bool {
+    init() {
+        self.nextTile = self.generateTile()
+        self.pocket = self.generateTile()
+    }
+
+    func isGameOver() -> Bool {
         return self.field.isPathFinished()
     }
 
-    func generateCell() -> Cell {
-        let cell = Cell()
+    func usePocket() throws {
+        if isGameOver() {
+            throw GameError.GameOver
+        }
+
+        swap(&self.pocket, &self.nextTile)
+    }
+
+    func rotateTileRight() throws {
+        if isGameOver() {
+            throw GameError.GameOver
+        }
+
+        self.nextTile.rotateRight()
+    }
+
+    func rotateTileLeft() throws {
+        if isGameOver() {
+            throw GameError.GameOver
+        }
+
+        self.nextTile.rotateLeft()
+    }
+
+    func placeTile() throws {
+        if isGameOver() {
+            throw GameError.GameOver
+        }
+
+        self.field.placeTile(self.nextTile)
+        self.nextTile = self.generateTile()
+    }
+
+    func generateTile() -> NonEmptyTile {
+        let tile = NonEmptyTile()
 
         var pool = [Int](0...11)
 
@@ -228,34 +286,37 @@ class Game {
             let b = pool[i]
             pool.removeAtIndex(i)
 
-            cell.connections.append((a, b))
+            tile.connections.append((a, b))
         }
 
-        return cell
+        return tile
     }
 }
 
-// var field: Field = Field()
-// field.render()
+do {
+    var game = Game()
 
-var game = Game()
+    print(game.state)
 
-var cell = NonEmptyCell() //game.generateCell()
-cell.connections = [(11, 5), (4, 10), (2, 3), (7, 1), (0, 6), (9, 8)]
-cell.output(cell.input(0))
+    try game.placeTile()
 
-print("Cell #1: \(cell.toString())")
+    print(game.state)
 
-game.field.placeCell(cell)
+    try game.rotateTileRight()
 
-// cell = game.generateCell()
-var cell2 = NonEmptyCell()
-cell2.connections = [(3, 5), (6, 7), (10, 11), (0, 2), (8, 1), (9, 4)]
+    print(game.state)
 
-print("Cell #2: \(cell2.toString())")
+    try game.placeTile()
 
-game.field.placeCell(cell2)
+    print(game.state)
 
-print(game.field.pathToString()) // should be ({0} ->) {7 -> 1} -> {6 -> 7} -> {0 -> 6} -> {0}
+    try game.usePocket()
 
-print("Game ended? \(game.isGameEnded())")
+    print(game.state)
+
+    try game.placeTile()
+
+    print(game.state)
+} catch GameError.GameOver {
+    print("Game over")
+}
