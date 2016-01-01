@@ -8,14 +8,8 @@ class Cell {
             if inPin == input {
                 return outPin
             }
-        }
 
-        return -1
-    }
-
-    func input(output: Int) -> Int {
-        for (inPin, outPin) in self.connections {
-            if outPin == output {
+            if outPin == input {
                 return inPin
             }
         }
@@ -23,11 +17,19 @@ class Cell {
         return -1
     }
 
+    func input(output: Int) -> Int {
+        if (output % 2) == 0 {
+            return (output + 12 - 5) % 12
+        } else {
+            return (output + 12 + 5) % 12
+        }
+    }
+
     func rotate(direction: Int) {
         var res: [(Int, Int)] = []
 
-        for (_in, _out) in self.connections {
-            res.append(((_in + (direction * 2)) % 12, (_out + (direction * 2)) % 12))
+        for (input, output) in self.connections {
+            res.append(((input + (direction * 2)) % 12, (output + (direction * 2)) % 12))
         }
 
         self.connections = res
@@ -92,14 +94,15 @@ class PathItem {
 
     init(cell: Cell, input: Int) {
         self.cell = cell
-        self.input = input
-        self.output = cell.output(input)
+        self.input = cell.input(input)
+        self.output = cell.output(self.input)
     }
 }
 
 class Field {
     var cells: [[Cell]] = []
     var path: [PathItem] = []
+    var nextPlace: (Int, Int) = (5, 4)
 
     init() {
         self.cells = []
@@ -127,12 +130,43 @@ class Field {
         }
     }
 
+    func findNextPlace() -> (Int, Int) {
+        var u: Int, v: Int
+        (u, v) = self.nextPlace
+
+        let output: Int = self.path.last!.output
+
+        switch output {
+        case 0, 1:
+            return (u + 1, v + 1)
+        case 2, 3:
+            return (u + 1, v)
+        case 4, 5:
+            return (u, v - 1)
+        case 6, 7:
+            return (u - 1, v - 1)
+        case 8, 9:
+            return (u - 1, v)
+        case 10, 11:
+            return (u, v + 1)
+        default:
+            return (u, v)
+        }
+    }
+
     func placeCell(cell: Cell) {
         if self.path.count == 0 {
             self.path.append(PathItem(cell: cell, input: 0))
         } else {
             self.path.append(PathItem(cell: cell, input: self.path.last!.output))
         }
+
+        var u: Int, v: Int
+
+        (u, v) = self.nextPlace
+        self.cells[u][v] = cell
+
+        self.nextPlace = self.findNextPlace()
     }
 
     func render() {
@@ -143,6 +177,20 @@ class Field {
 
             print("")
         }
+    }
+
+    func pathToString() -> String {
+        if self.path.count < 1 {
+            return ""
+        }
+
+        var res = "\(self.path.first!.input)"
+
+        for item in self.path {
+            res += " -> \(item.output)"
+        }
+
+        return res
     }
 }
 
@@ -179,14 +227,19 @@ class Game {
 
 var game = Game()
 
-var cell = game.generateCell()
+var cell = Cell() //game.generateCell()
+cell.connections = [(11, 5), (4, 10), (2, 3), (7, 1), (0, 6), (9, 8)]
+cell.output(cell.input(0))
 
 print(cell.toString())
 
 game.field.placeCell(cell)
 
-cell = game.generateCell()
+// cell = game.generateCell()
+cell.connections = [(3, 5), (6, 7), (10, 11), (0, 2), (8, 1), (9, 4)]
 
 print(cell.toString())
 
 game.field.placeCell(cell)
+
+print(game.field.pathToString()) // should be ({0} ->) {7 -> 1} -> {6 -> 7} -> {0 -> 6} -> {0}
