@@ -78,7 +78,7 @@ class BorderTile : Tile {
     }
 }
 
-class NullTile : Tile {
+class EmptyTile : Tile {
     // draw an empty space
     override func render() {
         print("o", terminator: "")
@@ -141,7 +141,7 @@ class Field {
             self.tiles.append([])
 
             for _ in 0...8 {
-                self.tiles[i].append(NullTile())
+                self.tiles[i].append(EmptyTile())
             }
         }
 
@@ -295,27 +295,27 @@ class Game {
 
 do {
     var game = Game()
-
+    
     print(game.state)
-
+    
     try game.placeTile()
-
+    
     print(game.state)
-
+    
     try game.rotateTileRight()
-
+    
     print(game.state)
-
+    
     try game.placeTile()
-
+    
     print(game.state)
-
+    
     try game.usePocket()
-
+    
     print(game.state)
-
+    
     try game.placeTile()
-
+    
     print(game.state)
 } catch GameError.GameOver {
     print("Game over")
