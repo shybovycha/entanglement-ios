@@ -17,6 +17,10 @@ class Cell {
         return -1
     }
 
+    func outputFromNeighbourOutput(output: Int) -> Int {
+        return self.output(self.input(output))
+    }
+
     func input(output: Int) -> Int {
         if (output % 2) == 0 {
             return (output + 12 - 5) % 12
@@ -51,13 +55,7 @@ class Cell {
     }
 
     func toString() -> String {
-        var res = ""
-
-        for (a, b) in self.connections {
-            res += "(\(a), \(b))"
-        }
-
-        return res
+        return "\(self.connections)"
     }
 }
 
@@ -87,22 +85,28 @@ class NullCell : Cell {
     }
 }
 
+class NonEmptyCell : Cell {
+
+}
+
 class PathItem {
-    var cell: Cell
+    var u: Int, v: Int
     var input: Int
     var output: Int
 
-    init(cell: Cell, input: Int) {
-        self.cell = cell
-        self.input = cell.input(input)
-        self.output = cell.output(self.input)
+    init(u: Int, v: Int, input: Int, output: Int) {
+        self.u = u
+        self.v = v
+        self.input = input
+        self.output = output
     }
 }
 
 class Field {
     var cells: [[Cell]] = []
-    var path: [PathItem] = []
-    var nextPlace: (Int, Int) = (5, 4)
+    var path: [PathItem] = [PathItem(u: 4, v: 4, input: 0, output: 0)]
+    var nextPlace: (Int, Int) = (5, 5)
+    var pathFinished: Bool = false
 
     init() {
         self.cells = []
@@ -154,19 +158,28 @@ class Field {
         }
     }
 
-    func placeCell(cell: Cell) {
-        if self.path.count == 0 {
-            self.path.append(PathItem(cell: cell, input: 0))
-        } else {
-            self.path.append(PathItem(cell: cell, input: self.path.last!.output))
-        }
+    func isPathFinished() -> Bool {
+        return self.pathFinished
+    }
 
+    func placeCell(cell: NonEmptyCell) {
         var u: Int, v: Int
 
         (u, v) = self.nextPlace
         self.cells[u][v] = cell
 
-        self.nextPlace = self.findNextPlace()
+        while self.cells[u][v] is NonEmptyCell {
+            let lastOutput: Int = self.path.last!.output
+
+            self.path.append(PathItem(u: u, v: v, input: self.cells[u][v].input(lastOutput), output: self.cells[u][v].outputFromNeighbourOutput(lastOutput)))
+
+            self.nextPlace = self.findNextPlace()
+            (u, v) = self.nextPlace
+        }
+
+        if self.cells[u][v] is ZeroCell || self.cells[u][v] is BorderCell {
+            self.pathFinished = true
+        }
     }
 
     func render() {
@@ -180,14 +193,10 @@ class Field {
     }
 
     func pathToString() -> String {
-        if self.path.count < 1 {
-            return ""
-        }
-
-        var res = "\(self.path.first!.input)"
+        var res = ""
 
         for item in self.path {
-            res += " -> \(item.output)"
+            res += " -> [\(item.u), \(item.v)] \(item.input) -> \(item.output)"
         }
 
         return res
@@ -200,6 +209,10 @@ class Game {
 
     init() {
         self.pocket = self.generateCell()
+    }
+
+    func isGameEnded() -> Bool {
+        return self.field.isPathFinished()
     }
 
     func generateCell() -> Cell {
@@ -227,19 +240,22 @@ class Game {
 
 var game = Game()
 
-var cell = Cell() //game.generateCell()
+var cell = NonEmptyCell() //game.generateCell()
 cell.connections = [(11, 5), (4, 10), (2, 3), (7, 1), (0, 6), (9, 8)]
 cell.output(cell.input(0))
 
-print(cell.toString())
+print("Cell #1: \(cell.toString())")
 
 game.field.placeCell(cell)
 
 // cell = game.generateCell()
-cell.connections = [(3, 5), (6, 7), (10, 11), (0, 2), (8, 1), (9, 4)]
+var cell2 = NonEmptyCell()
+cell2.connections = [(3, 5), (6, 7), (10, 11), (0, 2), (8, 1), (9, 4)]
 
-print(cell.toString())
+print("Cell #2: \(cell2.toString())")
 
-game.field.placeCell(cell)
+game.field.placeCell(cell2)
 
 print(game.field.pathToString()) // should be ({0} ->) {7 -> 1} -> {6 -> 7} -> {0 -> 6} -> {0}
+
+print("Game ended? \(game.isGameEnded())")
