@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rmagick (2.15.4)
+    ruby-progressbar (1.7.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rmagick
+  ruby-progressbar
+
+BUNDLED WITH
+   1.10.6
