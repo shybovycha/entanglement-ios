@@ -22,6 +22,8 @@ class Tile {
             }
         }
 
+        print("Could not find output for \(input) in \(connections)")
+
         return -1
     }
 
@@ -93,6 +95,10 @@ class EmptyTile : Tile {
     }
 }
 
+class PlaceholderTile : Tile {
+
+}
+
 class NonEmptyTile : Tile {
 
 }
@@ -149,7 +155,7 @@ class Field {
             self.tiles.append([])
 
             for _ in 0...8 {
-                self.tiles[i].append(NonEmptyTile())
+                self.tiles[i].append(PlaceholderTile())
             }
         }
 
@@ -215,8 +221,15 @@ class Field {
             self.path.expand(u, v: v, input: self.tiles[u][v].input(lastOutput), output: self.tiles[u][v].outputFromNeighbourOutput(lastOutput))
 
             self.nextPlace = self.findNextPlace()
+
+            if u == self.nextPlace.0 && v == self.nextPlace.1 {
+                break
+            }
+
             (u, v) = self.nextPlace
         }
+
+        (u, v) = self.nextPlace
 
         if self.tiles[u][v] is ZeroTile || self.tiles[u][v] is BorderTile {
             self.pathFinished = true
@@ -234,11 +247,11 @@ class Field {
     }
 }
 
-enum GameError : ErrorType {
+public enum GameError : ErrorType {
     case GameOver
 }
 
-class Game {
+public class Game {
     var field: Field = Field()
     var pocket: NonEmptyTile = NonEmptyTile()
     var nextTile: NonEmptyTile = NonEmptyTile()
@@ -286,6 +299,8 @@ class Game {
 
         self.field.placeTile(self.nextTile)
         self.nextTile = self.generateTile()
+
+        print(self.state)
     }
 
     func generateTile() -> NonEmptyTile {

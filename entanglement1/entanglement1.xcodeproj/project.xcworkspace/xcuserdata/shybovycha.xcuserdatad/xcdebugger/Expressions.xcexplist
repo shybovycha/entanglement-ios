@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "TileGenerator.generate(TileParams) -&gt; UIImage:TileGenerator.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Field.placeTile(NonEmptyTile) -&gt; ():Entanglement.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.tiles[u][v]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Game.placeTile() throws -&gt; ():Entanglement.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

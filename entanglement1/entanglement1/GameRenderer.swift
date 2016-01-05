@@ -70,10 +70,7 @@ public class GameRenderer {
         for u in 0...(self.game.field.tiles.count - 1) {
             for v in 0...(self.game.field.tiles[u].count - 1) {
                 let (x, y) = self.tileGenerator.uv2xy(u, v)
-                // let tile: Tile = self.game.field.tiles[u][v]
                 let image = self.generate((u, v))
-
-                // let image = self.tileGenerator.generate(TileParams(connections: [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (10, 11)], highlight: [(2, 3)]))
 
                 self.putImage(image, position: (x, y))
             }
@@ -92,7 +89,14 @@ public class GameRenderer {
 
     private func generate(position: (Int, Int)) -> UIImage {
         let u = position.0, v = position.1
-        let tile = self.game.field.tiles[u][v]
+        var tile: Tile
+
+        if u == self.game.field.nextPlace.0 && v == self.game.field.nextPlace.1 && !self.game.isGameOver() {
+            tile = self.game.nextTile
+        } else {
+            tile = self.game.field.tiles[u][v]
+        }
+
         let tileParams = TileParams(connections: tile.connections, highlight: [])
 
         if tile is BorderTile {
@@ -103,7 +107,7 @@ public class GameRenderer {
             return self.tileGenerator.zeroTile(tileParams)
         }
 
-        if tile is NonEmptyTile {
+        if tile is NonEmptyTile || tile is PlaceholderTile {
             return self.tileGenerator.nonEmptyTile(tileParams)
         }
 
@@ -153,9 +157,9 @@ class TileGenerator {
         let y = Int(ceil(ky * Float(self.sideLength + (self.stroke * 0))))
 
         let cx = 12 * (self.sideLength + (self.stroke * 0))
-        let cy = 0
+        let cy = Int(ceil(8.0 * sqrt(3.0) * Float(self.sideLength + (self.stroke * 0))))
 
-        return (cx + x, cy + y)
+        return (cx + x, cy - y)
     }
 
     func emptyTile(tileParams: TileParams) -> UIImage {
