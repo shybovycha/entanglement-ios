@@ -13,34 +13,39 @@ public class RenderingParams {
     var sideLength: Int
     var stroke: Int = 1
     var pathStroke: Int = 4
-    var strokeColor: UIColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
-    var pathColor: UIColor = UIColor.whiteColor()
-    var highlightPathColor: UIColor = UIColor(red: 0.9, green: 0.5, blue: 0.5, alpha: 1.0)
+    var strokeColor: UIColor
+    var pathColor: UIColor
+    var highlightPathColor: UIColor
+    var markPathColor: UIColor
 
     init(sideLength: Int,
         stroke: Int = 1,
         pathStroke: Int = 4,
         strokeColor: UIColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0),
         pathColor: UIColor = UIColor.whiteColor(),
-        highlightPathColor: UIColor = UIColor(red: 0.9, green: 0.5, blue: 0.5, alpha: 1.0)) {
+        highlightPathColor: UIColor = UIColor(red: 0.9, green: 0.5, blue: 0.5, alpha: 1.0),
+        markPathColor: UIColor = UIColor(red: 0.9, green: 0.15, blue: 0.15, alpha: 1.0)) {
             self.sideLength = sideLength
             self.stroke = stroke
             self.pathStroke = pathStroke
             self.strokeColor = strokeColor
             self.pathColor = pathColor
             self.highlightPathColor = highlightPathColor
+            self.markPathColor = markPathColor
     }
 }
 
 public class TileParams {
     var connections: [(Int, Int)]
     var highlight: [(Int, Int)]
+    var mark: [(Int, Int)]
     var position: (Int, Int)
 
-    init(connections: [(Int, Int)], highlight: [(Int, Int)], position: (Int, Int) = (-1, -1)) {
+    init(connections: [(Int, Int)], highlight: [(Int, Int)], mark: [(Int, Int)] = [], position: (Int, Int) = (-1, -1)) {
         self.connections = connections
         self.highlight = highlight
         self.position = position
+        self.mark = mark
     }
 }
 
@@ -97,7 +102,24 @@ public class GameRenderer {
             tile = self.game.field.tiles[u][v]
         }
 
-        let tileParams = TileParams(connections: tile.connections, highlight: [])
+        var pathItems: [PathItem] = self.game.field.path.items.filter({ $0.u == u && $0.v == v})
+        var mark: [(Int, Int)] = []
+
+        for p in pathItems {
+            mark.append((p.input, p.output))
+        }
+
+        var highlight: [(Int, Int)] = []
+        var tmpPath: Path
+        (tmpPath, (_, _)) = self.game.field.findFuturePath(self.game.nextTile)
+
+        pathItems = tmpPath.items.filter({ $0.u == u && $0.v == v })
+
+        for p in pathItems {
+            highlight.append((p.input, p.output))
+        }
+
+        let tileParams = TileParams(connections: tile.connections, highlight: highlight, mark: mark)
 
         if tile is BorderTile {
             return self.tileGenerator.borderTile(tileParams)
@@ -122,6 +144,7 @@ class TileGenerator {
     var strokeColor: UIColor
     var pathColor: UIColor
     var highlightPathColor: UIColor
+    var markPathColor: UIColor
 
     var width: Int
     var height: Int
@@ -139,6 +162,7 @@ class TileGenerator {
         self.strokeColor = renderingParams.strokeColor
         self.pathColor = renderingParams.pathColor
         self.highlightPathColor = renderingParams.highlightPathColor
+        self.markPathColor = renderingParams.markPathColor
 
         self.scaleCoefficient = Float(self.sideLength) / 100.0
 
@@ -216,7 +240,9 @@ class TileGenerator {
             let connectionPathRef: CGMutablePathRef = CGPathCreateMutable()
             var pathColor: CGColor
 
-            if tileParams.highlight.contains({ ($0.0 == c0 && $0.1 == c1) || ($0.0 == c1 && $0.1 == c0) }) {
+            if tileParams.mark.contains({ ($0.0 == c0 && $0.1 == c1) || ($0.0 == c1 && $0.1 == c0) }) {
+                pathColor = self.markPathColor.CGColor
+            } else if tileParams.highlight.contains({ ($0.0 == c0 && $0.1 == c1) || ($0.0 == c1 && $0.1 == c0) }) {
                 pathColor = self.highlightPathColor.CGColor
             } else {
                 pathColor = self.pathColor.CGColor
