@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Home View Controller-->
@@ -74,14 +75,35 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3VW-TD-zNH" userLabel="PocketView">
+                                <rect key="frame" x="0.0" y="464" width="600" height="128"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E5S-QE-l7C">
+                                        <rect key="frame" x="281" y="90" width="38" height="30"/>
+                                        <state key="normal" title="Swap"/>
+                                        <connections>
+                                            <action selector="usePocketButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="F04-DI-PAM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="E5S-QE-l7C" firstAttribute="bottom" secondItem="3VW-TD-zNH" secondAttribute="bottomMargin" id="2f3-Lh-54b"/>
+                                    <constraint firstItem="E5S-QE-l7C" firstAttribute="centerX" secondItem="3VW-TD-zNH" secondAttribute="centerX" id="BSf-RS-CrY"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="usu-6M-oke" firstAttribute="trailing" secondItem="MZP-TY-r3e" secondAttribute="trailing" id="0a8-m0-Wux"/>
+                            <constraint firstItem="3VW-TD-zNH" firstAttribute="top" secondItem="MZP-TY-r3e" secondAttribute="bottom" constant="14" id="AN0-JC-Jav"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="3VW-TD-zNH" secondAttribute="bottom" constant="8" symbolic="YES" id="IH3-yx-uor"/>
                             <constraint firstItem="usu-6M-oke" firstAttribute="leading" secondItem="MZP-TY-r3e" secondAttribute="leading" id="LUO-qy-Ygu"/>
                             <constraint firstAttribute="trailing" secondItem="usu-6M-oke" secondAttribute="trailing" id="W56-Hm-6WY"/>
+                            <constraint firstItem="3VW-TD-zNH" firstAttribute="trailing" secondItem="MZP-TY-r3e" secondAttribute="trailing" id="hdl-hN-qTK"/>
                             <constraint firstItem="usu-6M-oke" firstAttribute="leading" secondItem="abn-gt-MAK" secondAttribute="leading" id="hoQ-1f-dxf"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="MZP-TY-r3e" secondAttribute="bottom" constant="150" id="sr6-c8-pXJ"/>
+                            <constraint firstItem="3VW-TD-zNH" firstAttribute="leading" secondItem="MZP-TY-r3e" secondAttribute="leading" id="tRa-Ak-BMh"/>
                             <constraint firstItem="MZP-TY-r3e" firstAttribute="top" secondItem="usu-6M-oke" secondAttribute="bottom" constant="50" id="wdH-Sg-GKN"/>
                             <constraint firstItem="usu-6M-oke" firstAttribute="top" secondItem="abn-gt-MAK" secondAttribute="top" id="z8Y-Xh-17y"/>
                         </constraints>
@@ -89,6 +111,7 @@
                     <connections>
                         <outlet property="gameView" destination="MZP-TY-r3e" id="jJj-VS-W03"/>
                         <outlet property="navbar" destination="usu-6M-oke" id="nYo-7B-Jfl"/>
+                        <outlet property="pocketView" destination="3VW-TD-zNH" id="gZE-4B-h3e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

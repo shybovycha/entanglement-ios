@@ -15,6 +15,12 @@ class GameViewController: UIViewController {
 
     @IBOutlet weak var navbar: UINavigationBar!
     @IBOutlet weak var gameView: UIView!
+    @IBOutlet weak var pocketView: UIView!
+
+    @IBAction func usePocketButtonPressed(sender: UIButton!) {
+        self.game.usePocket()
+        self.renderer!.update()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +37,10 @@ class GameViewController: UIViewController {
         let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
         self.gameView.addGestureRecognizer(swipeUpGesture)
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
 
         self.restartGame()
     }
@@ -53,7 +63,7 @@ class GameViewController: UIViewController {
 
     func restartGame() {
         self.game = Game()
-        self.renderer = GameRenderer(view: self.gameView, game: self.game, renderingParams: RenderingParams(sideLength: 15))
+        self.renderer = GameRenderer(mainView: self.gameView, pocketView: self.pocketView, game: self.game, renderingParams: RenderingParams(sideLength: 20))
         self.renderer!.update()
     }
 
@@ -87,12 +97,12 @@ class GameViewController: UIViewController {
 
             try self.game.placeTile()
 
+            self.renderer!.update()
+            self.updatePointsLabel()
+
             if self.game.isGameOver() {
                 throw GameError.GameOver
             }
-
-            self.renderer!.update()
-            self.updatePointsLabel()
         } catch GameError.GameOver {
             self.showGameOverMessage()
         } catch {

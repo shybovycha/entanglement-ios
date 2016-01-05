@@ -41,7 +41,7 @@ public class TileParams {
     var mark: [(Int, Int)]
     var position: (Int, Int)
 
-    init(connections: [(Int, Int)], highlight: [(Int, Int)], mark: [(Int, Int)] = [], position: (Int, Int) = (-1, -1)) {
+    init(connections: [(Int, Int)], highlight: [(Int, Int)] = [], mark: [(Int, Int)] = [], position: (Int, Int) = (-1, -1)) {
         self.connections = connections
         self.highlight = highlight
         self.position = position
@@ -53,17 +53,20 @@ public class GameRenderer {
     var game: Game
     var tileGenerator: TileGenerator
     var view: UIView
+    var pocketContainerView: UIView
+    var pocketTileView: UIView? = nil
     var subviews: [UIView] = []
     var nextTileView: UIView = UIView()
 
-    init(view: UIView, game: Game, renderingParams: RenderingParams) {
-        self.view = view
+    init(mainView: UIView, pocketView: UIView, game: Game, renderingParams: RenderingParams) {
+        self.view = mainView
+        self.pocketContainerView = pocketView
         self.game = game
         self.tileGenerator = TileGenerator(renderingParams: renderingParams)
     }
 
     public func rotateTileRight() {
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(0.3, animations: {
             self.nextTileView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 3.0))
         }, completion: {finished in
             self.game.rotateTileRight()
@@ -72,7 +75,7 @@ public class GameRenderer {
     }
 
     public func rotateTileLeft() {
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(0.3, animations: {
             self.nextTileView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / -3.0))
         }, completion: {finished in
             self.game.rotateTileLeft()
@@ -82,6 +85,27 @@ public class GameRenderer {
 
     public func update() {
         self.renderField()
+        self.renderPocket()
+    }
+
+    private func renderPocket() {
+        if self.pocketTileView != nil {
+            self.pocketTileView!.removeFromSuperview()
+        }
+
+        var (x, y) = (self.pocketContainerView.frame.size.width, self.pocketContainerView.frame.height)
+
+        let image = self.tileGenerator.nonEmptyTile(TileParams(connections: self.game.pocket.connections))
+
+        x = (x / 2) - (image.size.width / 2)
+        y = (y / 2) - (image.size.height / 2)
+
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: x, y: y), size: image.size))
+
+        imageView.image = image
+
+        self.pocketTileView = imageView
+        self.pocketContainerView.addSubview(imageView)
     }
 
     private func renderField() {
@@ -99,13 +123,10 @@ public class GameRenderer {
                 let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: x, y: y), size: image.size))
 
                 imageView.image = image
-                
-                // view.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                // view.layer.position = CGPoint(x: x - Int(image.size.width / 2), y: y + Int(image.size.height / 2))
 
                 self.subviews.append(imageView)
 
-                if u == self.game.field.nextPlace.0 && v == self.game.field.nextPlace.1 {
+                if u == self.game.field.nextPlace.0 && v == self.game.field.nextPlace.1 && !self.game.isGameOver() {
                     self.nextTileView = imageView
                 }
 
@@ -207,7 +228,7 @@ class TileGenerator {
         let x = Int(ceil(kx * Float(self.sideLength + (self.stroke * 0))))
         let y = Int(ceil(ky * Float(self.sideLength + (self.stroke * 0))))
 
-        let cx = 12 * (self.sideLength + (self.stroke * 0))
+        let cx = 9 * (self.sideLength + (self.stroke * 0))
         let cy = Int(ceil(8.0 * sqrt(3.0) * Float(self.sideLength + (self.stroke * 0))))
 
         return (cx + x, cy - y)
