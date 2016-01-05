@@ -54,11 +54,34 @@ public class GameRenderer {
     var tileGenerator: TileGenerator
     var view: UIView
     var subviews: [UIView] = []
+    var nextTileView: UIView = UIView()
 
     init(view: UIView, game: Game, renderingParams: RenderingParams) {
         self.view = view
         self.game = game
         self.tileGenerator = TileGenerator(renderingParams: renderingParams)
+    }
+
+    public func rotateTileRight() {
+        print("anchor: \(self.nextTileView.layer.anchorPoint)")
+
+        UIView.animateWithDuration(1.0, animations: {
+            var transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 3.0))
+
+            self.nextTileView.transform = transform
+        }, completion: {finished in
+            self.game.rotateTileRight()
+            self.update()
+        })
+    }
+
+    public func rotateTileLeft() {
+        UIView.animateWithDuration(1.0, animations: {
+            self.nextTileView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / -3.0))
+        }, completion: {finished in
+            self.game.rotateTileLeft()
+            self.update()
+        })
     }
 
     public func update() {
@@ -77,19 +100,22 @@ public class GameRenderer {
                 let (x, y) = self.tileGenerator.uv2xy(u, v)
                 let image = self.generate((u, v))
 
-                self.putImage(image, position: (x, y))
+                let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: x, y: y), size: image.size))
+
+                imageView.image = image
+                
+                // view.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                // view.layer.position = CGPoint(x: x - Int(image.size.width / 2), y: y + Int(image.size.height / 2))
+
+                self.subviews.append(imageView)
+
+                if u == self.game.field.nextPlace.0 && v == self.game.field.nextPlace.1 {
+                    self.nextTileView = imageView
+                }
+
+                self.view.addSubview(imageView)
             }
         }
-    }
-
-    private func putImage(image: UIImage, position: (Int, Int)) {
-        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: position.0, y: position.1), size: image.size))
-
-        imageView.image = image
-
-        self.subviews.append(imageView)
-
-        self.view.addSubview(imageView)
     }
 
     private func generate(position: (Int, Int)) -> UIImage {
@@ -187,7 +213,7 @@ class TileGenerator {
     }
 
     func emptyTile(tileParams: TileParams) -> UIImage {
-        let size = CGSize(width: self.width * 2, height: self.height * 2)
+        let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
 
@@ -202,7 +228,7 @@ class TileGenerator {
     }
 
     func nonEmptyTile(tileParams: TileParams) -> UIImage {
-        let size = CGSize(width: self.width * 2, height: self.height * 2)
+        let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
 
@@ -284,7 +310,7 @@ class TileGenerator {
     }
 
     func borderTile(tileParams: TileParams) -> UIImage {
-        let size = CGSize(width: self.width * 2, height: self.height * 2)
+        let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
 
@@ -323,7 +349,7 @@ class TileGenerator {
     }
 
     func zeroTile(tileParams: TileParams) -> UIImage {
-        let size = CGSize(width: self.width * 2, height: self.height * 2)
+        let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
 

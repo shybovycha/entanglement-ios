@@ -11,22 +11,32 @@ import UIKit
 class GameViewController: UIViewController {
     var game: Game = Game()
     var renderer: GameRenderer? = nil
+    var points: Int = 0
+
+    @IBOutlet weak var navbar: UINavigationBar!
+    @IBOutlet weak var gameView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.updatePointsLabel()
+
         let tapGesture = UITapGestureRecognizer(target: self, action: "tapAction:")
-        self.view.addGestureRecognizer(tapGesture)
+        self.gameView.addGestureRecognizer(tapGesture)
 
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
         swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
-        self.view.addGestureRecognizer(swipeDownGesture)
+        self.gameView.addGestureRecognizer(swipeDownGesture)
 
         let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
-        self.view.addGestureRecognizer(swipeUpGesture)
+        self.gameView.addGestureRecognizer(swipeUpGesture)
 
         self.restartGame()
+    }
+
+    func updatePointsLabel() {
+        self.navbar.topItem!.title = String(self.points)
     }
 
     func showGameOverMessage() {
@@ -43,7 +53,7 @@ class GameViewController: UIViewController {
 
     func restartGame() {
         self.game = Game()
-        self.renderer = GameRenderer(view: self.view, game: self.game, renderingParams: RenderingParams(sideLength: 15))
+        self.renderer = GameRenderer(view: self.gameView, game: self.game, renderingParams: RenderingParams(sideLength: 15))
         self.renderer!.update()
     }
 
@@ -60,29 +70,16 @@ class GameViewController: UIViewController {
     }
 
     func swipeDownAction(sender: UISwipeGestureRecognizer) {
-        do {
-            try self.game.rotateTileRight()
-            self.renderer!.update()
-        } catch GameError.GameOver {
-            self.showGameOverMessage()
-        } catch {
-            print("Shit happens")
-        }
+        self.renderer!.rotateTileRight()
     }
 
     func swipeUpAction(sender: UISwipeGestureRecognizer) {
-        do {
-            try self.game.rotateTileLeft()
-            self.renderer!.update()
-        } catch GameError.GameOver {
-            self.showGameOverMessage()
-        } catch {
-            print("Shit happens")
-        }
+        self.renderer!.rotateTileLeft()
     }
 
     func tapAction(sender: UITapGestureRecognizer) {
         do {
+            self.points += self.game.pointsGathered()
             try self.game.placeTile()
 
             if self.game.isGameOver() {
@@ -90,6 +87,7 @@ class GameViewController: UIViewController {
             }
 
             self.renderer!.update()
+            self.updatePointsLabel()
         } catch GameError.GameOver {
             print("Game over!")
         } catch {

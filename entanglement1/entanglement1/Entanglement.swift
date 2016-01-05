@@ -309,27 +309,15 @@ public class Game {
         return self.field.isPathFinished()
     }
 
-    func usePocket() throws {
-        if isGameOver() {
-            throw GameError.GameOver
-        }
-
+    func usePocket() {
         swap(&self.pocket, &self.nextTile)
     }
 
-    func rotateTileRight() throws {
-        if isGameOver() {
-            throw GameError.GameOver
-        }
-
+    func rotateTileRight() {
         self.nextTile.rotateRight()
     }
 
-    func rotateTileLeft() throws {
-        if isGameOver() {
-            throw GameError.GameOver
-        }
-
+    func rotateTileLeft() {
         self.nextTile.rotateLeft()
     }
 
@@ -359,5 +347,16 @@ public class Game {
         }
 
         return tile
+    }
+
+    func pointsGathered() -> Int {
+        let (futurePath, (_, _)) = self.field.findFuturePath(self.nextTile)
+        var points: Int = 0
+
+        for i in 0...futurePath.items.count - 1 {
+            points += i + 1
+        }
+
+        return points
     }
 }
