@@ -15,8 +15,16 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let gesture = UITapGestureRecognizer(target: self, action: "tapAction:")
-        self.view.addGestureRecognizer(gesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: "tapAction:")
+        self.view.addGestureRecognizer(tapGesture)
+
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
+        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
+        self.view.addGestureRecognizer(swipeDownGesture)
+
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
+        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
+        self.view.addGestureRecognizer(swipeUpGesture)
 
         self.restartGame()
     }
@@ -49,6 +57,28 @@ class GameViewController: UIViewController {
 
     func exitGameHandler(action: UIAlertAction!) {
         self.exitGame()
+    }
+
+    func swipeDownAction(sender: UISwipeGestureRecognizer) {
+        do {
+            try self.game.rotateTileRight()
+            self.renderer!.update()
+        } catch GameError.GameOver {
+            self.showGameOverMessage()
+        } catch {
+            print("Shit happens")
+        }
+    }
+
+    func swipeUpAction(sender: UISwipeGestureRecognizer) {
+        do {
+            try self.game.rotateTileLeft()
+            self.renderer!.update()
+        } catch GameError.GameOver {
+            self.showGameOverMessage()
+        } catch {
+            print("Shit happens")
+        }
     }
 
     func tapAction(sender: UITapGestureRecognizer) {

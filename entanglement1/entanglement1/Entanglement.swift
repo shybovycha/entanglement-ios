@@ -43,7 +43,7 @@ class Tile {
         var res: [(Int, Int)] = []
 
         for (input, output) in self.connections {
-            res.append(((input + (direction * 2)) % 12, (output + (direction * 2)) % 12))
+            res.append(((input + (direction * 2) + 12) % 12, (output + (direction * 2) + 12) % 12))
         }
 
         self.connections = res
