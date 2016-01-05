@@ -63,12 +63,8 @@ public class GameRenderer {
     }
 
     public func rotateTileRight() {
-        print("anchor: \(self.nextTileView.layer.anchorPoint)")
-
-        UIView.animateWithDuration(1.0, animations: {
-            var transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 3.0))
-
-            self.nextTileView.transform = transform
+        UIView.animateWithDuration(0.5, animations: {
+            self.nextTileView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 3.0))
         }, completion: {finished in
             self.game.rotateTileRight()
             self.update()
@@ -76,7 +72,7 @@ public class GameRenderer {
     }
 
     public func rotateTileLeft() {
-        UIView.animateWithDuration(1.0, animations: {
+        UIView.animateWithDuration(0.5, animations: {
             self.nextTileView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / -3.0))
         }, completion: {finished in
             self.game.rotateTileLeft()
@@ -136,13 +132,18 @@ public class GameRenderer {
         }
 
         var highlight: [(Int, Int)] = []
-        var tmpPath: Path
-        (tmpPath, (_, _)) = self.game.field.findFuturePath(self.game.nextTile)
 
-        pathItems = tmpPath.items.filter({ $0.u == u && $0.v == v })
+        do {
+            var tmpPath: Path
+            try (tmpPath, (_, _)) = self.game.field.findFuturePath(self.game.nextTile)
 
-        for p in pathItems {
-            highlight.append((p.input, p.output))
+            pathItems = tmpPath.items.filter({ $0.u == u && $0.v == v })
+
+            for p in pathItems {
+                highlight.append((p.input, p.output))
+            }
+        } catch GameError.GameOver {
+        } catch {
         }
 
         let tileParams = TileParams(connections: tile.connections, highlight: highlight, mark: mark)

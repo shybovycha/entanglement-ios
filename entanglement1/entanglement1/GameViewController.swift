@@ -58,7 +58,7 @@ class GameViewController: UIViewController {
     }
 
     func exitGame() {
-        exit(0)
+        performSegueWithIdentifier("exitGameSegue", sender: self)
     }
 
     func restartGameHandler(action: UIAlertAction!) {
@@ -79,17 +79,22 @@ class GameViewController: UIViewController {
 
     func tapAction(sender: UITapGestureRecognizer) {
         do {
-            self.points += self.game.pointsGathered()
+            var pointsGathered: Int = 0
+
+            try pointsGathered = self.game.pointsGathered()
+
+            self.points += pointsGathered
+
             try self.game.placeTile()
 
             if self.game.isGameOver() {
-                self.showGameOverMessage()
+                throw GameError.GameOver
             }
 
             self.renderer!.update()
             self.updatePointsLabel()
         } catch GameError.GameOver {
-            print("Game over!")
+            self.showGameOverMessage()
         } catch {
             print("Shit happens...")
         }

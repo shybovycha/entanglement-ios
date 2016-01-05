@@ -209,7 +209,11 @@ class Field {
         return self.pathFinished
     }
 
-    func findFuturePath(tile: NonEmptyTile) -> (Path, (Int, Int)) {
+    func findFuturePath(tile: NonEmptyTile) throws -> (Path, (Int, Int)) {
+        if self.isPathFinished() {
+            throw GameError.GameOver
+        }
+
         let tmpPath: Path = Path()
         var tmpNextPlace: (Int, Int) = self.nextPlace
         var u: Int, v: Int
@@ -349,9 +353,10 @@ public class Game {
         return tile
     }
 
-    func pointsGathered() -> Int {
-        let (futurePath, (_, _)) = self.field.findFuturePath(self.nextTile)
+    func pointsGathered() throws -> Int {
         var points: Int = 0
+
+        let (futurePath, (_, _)) = try self.field.findFuturePath(self.nextTile)
 
         for i in 0...futurePath.items.count - 1 {
             points += i + 1
