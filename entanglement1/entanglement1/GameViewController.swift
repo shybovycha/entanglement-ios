@@ -9,16 +9,43 @@
 import UIKit
 
 class GameViewController: UIViewController {
-    let tileGenerator = TileGenerator(sideLength: 25)
+    var game: Game = Game()
+    var renderer: GameRenderer? = nil
+
+    /*do {
+    var game = Game()
+
+    print(game.state)
+
+    try game.placeTile()
+
+    print(game.state)
+
+    try game.rotateTileRight()
+
+    print(game.state)
+
+    try game.placeTile()
+
+    print(game.state)
+
+    try game.usePocket()
+
+    print(game.state)
+
+    try game.placeTile()
+
+    print(game.state)
+    } catch GameError.GameOver {
+        print("Game over")
+    }*/
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let image = self.tileGenerator.generate(TileParams(connections: [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (10, 11)], highlight: []))
-        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 100, y: 300), size: image.size))
-        self.view.addSubview(imageView)
+        self.renderer = GameRenderer(view: self.view, game: self.game, renderingParams: RenderingParams(sideLength: 15))
 
-        imageView.image = image
+        self.renderer!.update()
     }
 
     override func shouldAutorotate() -> Bool {

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9364B6C1C3AAF0700A928CC /* TileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9364B6B1C3AAF0700A928CC /* TileGenerator.swift */; };
+		C9364B6C1C3AAF0700A928CC /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9364B6B1C3AAF0700A928CC /* GameRenderer.swift */; };
+		C9364B6E1C3BB9A100A928CC /* Entanglement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9364B6D1C3BB9A100A928CC /* Entanglement.swift */; };
 		C9DA28B61C3970EE00CEF157 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA28B51C3970EE00CEF157 /* AppDelegate.swift */; };
 		C9DA28BC1C3970EE00CEF157 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA28BB1C3970EE00CEF157 /* GameViewController.swift */; };
 		C9DA28BF1C3970EE00CEF157 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9DA28BD1C3970EE00CEF157 /* Main.storyboard */; };
@@ -16,7 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C9364B6B1C3AAF0700A928CC /* TileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileGenerator.swift; sourceTree = "<group>"; };
+		C9364B6B1C3AAF0700A928CC /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
+		C9364B6D1C3BB9A100A928CC /* Entanglement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entanglement.swift; sourceTree = "<group>"; };
 		C9DA28B21C3970EE00CEF157 /* entanglement1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = entanglement1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9DA28B51C3970EE00CEF157 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9DA28BB1C3970EE00CEF157 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -62,7 +64,8 @@
 				C9DA28C01C3970EE00CEF157 /* Assets.xcassets */,
 				C9DA28C21C3970EE00CEF157 /* LaunchScreen.storyboard */,
 				C9DA28C51C3970EE00CEF157 /* Info.plist */,
-				C9364B6B1C3AAF0700A928CC /* TileGenerator.swift */,
+				C9364B6B1C3AAF0700A928CC /* GameRenderer.swift */,
+				C9364B6D1C3BB9A100A928CC /* Entanglement.swift */,
 			);
 			path = entanglement1;
 			sourceTree = "<group>";
@@ -139,9 +142,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9364B6C1C3AAF0700A928CC /* TileGenerator.swift in Sources */,
+				C9364B6C1C3AAF0700A928CC /* GameRenderer.swift in Sources */,
 				C9DA28BC1C3970EE00CEF157 /* GameViewController.swift in Sources */,
 				C9DA28B61C3970EE00CEF157 /* AppDelegate.swift in Sources */,
+				C9364B6E1C3BB9A100A928CC /* Entanglement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
