@@ -9,7 +9,7 @@
         <!--Home View Controller-->
         <scene sceneID="REQ-7r-hdT">
             <objects>
-                <viewController id="awE-7z-awR" customClass="HomeViewController" customModule="entanglement1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="awE-7z-awR" customClass="HomeViewController" customModule="entanglement" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iZZ-Dz-Sqr"/>
                         <viewControllerLayoutGuide type="bottom" id="gID-Bd-oWY"/>
@@ -42,7 +42,7 @@
                                 <rect key="frame" x="60" y="77" width="470" height="30"/>
                                 <state key="normal" title="Start new game"/>
                                 <connections>
-                                    <segue destination="BV1-FR-VrT" kind="show" action="showDetailViewController:sender:" id="DBY-2K-ohg"/>
+                                    <action selector="startOrLogin" destination="awE-7z-awR" eventType="touchUpInside" id="06B-Cf-Flh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -61,6 +61,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pfW-Sc-b0S"/>
+                    <connections>
+                        <outlet property="loginOrStartGameButton" destination="1tm-Ti-g6S" id="VrY-Ox-9CA"/>
+                        <segue destination="BV1-FR-VrT" kind="show" identifier="startGame" action="showDetailViewController:sender:" id="eyk-sa-USm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XKT-cY-MLd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -69,7 +73,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="entanglement1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="entanglement" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>

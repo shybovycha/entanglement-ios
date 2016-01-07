@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CloudKit
 
 class GameViewController: UIViewController {
     var game: Game = Game()
