@@ -67,7 +67,7 @@ class GameViewController: UIViewController {
         let tileSize: Int = min(lx, ly)
 
         self.game = Game()
-        self.renderer = GameRenderer(mainView: self.gameView, pocketView: self.pocketView, game: self.game, renderingParams: RenderingParams(sideLength: tileSize, stroke: tileSize / 10, pathStroke: tileSize / 6))
+        self.renderer = GameRenderer(mainView: self.gameView, pocketView: self.pocketView, game: self.game, renderingParams: RenderingParams(sideLength: tileSize, stroke: tileSize / 10, pathStroke: tileSize / 4))
         self.renderer!.update()
     }
 
