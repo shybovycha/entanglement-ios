@@ -9,6 +9,8 @@ line. Your goal is to create the longest red line path possible.
 You can use either the tile in your hands or swap it with the one
 in your pocket.
 
+![Screenshot](https://raw.githubusercontent.com/shybovycha/entanglement-ios/master/screen1.png)
+
 ## Architecture
 
 The board is represented as a two-dimensional array of `Tile` objects.
