@@ -57,16 +57,6 @@ class GameViewController: UIViewController {
 
     func showGameOverMessage() {
         self.exitGame()
-        // create the alert
-
-        /*let alert = UIAlertController(title: "Game Over", message: "You got \(self.points) points. Would you like to play again?", preferredStyle: UIAlertControllerStyle.Alert)
-
-        // add the actions (buttons)
-        alert.addAction(UIAlertAction(title: "Again!", style: UIAlertActionStyle.Default, handler: self.restartGameHandler))
-        alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Destructive, handler: self.exitGameHandler))
-
-        // show the alert
-        self.presentViewController(alert, animated: true, completion: nil)*/
     }
 
     func restartGame() {
@@ -77,14 +67,13 @@ class GameViewController: UIViewController {
         let tileSize: Int = min(lx, ly)
 
         self.game = Game()
-        self.renderer = GameRenderer(mainView: self.gameView, pocketView: self.pocketView, game: self.game, renderingParams: RenderingParams(sideLength: tileSize))
+        self.renderer = GameRenderer(mainView: self.gameView, pocketView: self.pocketView, game: self.game, renderingParams: RenderingParams(sideLength: tileSize, stroke: tileSize / 10, pathStroke: tileSize / 6))
         self.renderer!.update()
     }
 
     func exitGame() {
         self.saveResult()
         self.dismissViewControllerAnimated(true, completion: nil)
-        // self.navigationController?.popViewControllerAnimated(true) // popToRootViewControllerAnimated(true)
     }
 
     func restartGameHandler(action: UIAlertAction!) {
@@ -184,7 +173,6 @@ class GameViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
     }
 
     override func prefersStatusBarHidden() -> Bool {
