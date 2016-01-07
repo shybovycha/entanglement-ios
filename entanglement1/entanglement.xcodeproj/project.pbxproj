@@ -21,7 +21,7 @@
 		C9364B6B1C3AAF0700A928CC /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
 		C9364B6D1C3BB9A100A928CC /* Entanglement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entanglement.swift; sourceTree = "<group>"; };
 		C9364B6F1C3C185600A928CC /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		C9DA28B21C3970EE00CEF157 /* entanglement1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = entanglement1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9DA28B21C3970EE00CEF157 /* entanglement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = entanglement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9DA28B51C3970EE00CEF157 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9DA28BB1C3970EE00CEF157 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		C9DA28BE1C3970EE00CEF157 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		C9DA28A91C3970EE00CEF157 = {
 			isa = PBXGroup;
 			children = (
-				C9DA28B41C3970EE00CEF157 /* entanglement1 */,
+				C9DA28B41C3970EE00CEF157 /* entanglement */,
 				C9DA28B31C3970EE00CEF157 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		C9DA28B31C3970EE00CEF157 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9DA28B21C3970EE00CEF157 /* entanglement1.app */,
+				C9DA28B21C3970EE00CEF157 /* entanglement.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C9DA28B41C3970EE00CEF157 /* entanglement1 */ = {
+		C9DA28B41C3970EE00CEF157 /* entanglement */ = {
 			isa = PBXGroup;
 			children = (
 				C9DA28B51C3970EE00CEF157 /* AppDelegate.swift */,
@@ -70,15 +70,16 @@
 				C9364B6D1C3BB9A100A928CC /* Entanglement.swift */,
 				C9364B6F1C3C185600A928CC /* HomeViewController.swift */,
 			);
+			name = entanglement;
 			path = entanglement1;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C9DA28B11C3970EE00CEF157 /* entanglement1 */ = {
+		C9DA28B11C3970EE00CEF157 /* entanglement */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9DA28C81C3970EE00CEF157 /* Build configuration list for PBXNativeTarget "entanglement1" */;
+			buildConfigurationList = C9DA28C81C3970EE00CEF157 /* Build configuration list for PBXNativeTarget "entanglement" */;
 			buildPhases = (
 				C9DA28AE1C3970EE00CEF157 /* Sources */,
 				C9DA28AF1C3970EE00CEF157 /* Frameworks */,
@@ -88,9 +89,9 @@
 			);
 			dependencies = (
 			);
-			name = entanglement1;
+			name = entanglement;
 			productName = entanglement1;
-			productReference = C9DA28B21C3970EE00CEF157 /* entanglement1.app */;
+			productReference = C9DA28B21C3970EE00CEF157 /* entanglement.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -109,7 +110,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C9DA28AD1C3970EE00CEF157 /* Build configuration list for PBXProject "entanglement1" */;
+			buildConfigurationList = C9DA28AD1C3970EE00CEF157 /* Build configuration list for PBXProject "entanglement" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -122,7 +123,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C9DA28B11C3970EE00CEF157 /* entanglement1 */,
+				C9DA28B11C3970EE00CEF157 /* entanglement */,
 			);
 		};
 /* End PBXProject section */
@@ -264,8 +265,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = entanglement1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = uj.edu.pl.entanglement1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = uj.edu.pl.entanglement;
+				PRODUCT_NAME = entanglement;
 			};
 			name = Debug;
 		};
@@ -275,15 +276,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = entanglement1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = uj.edu.pl.entanglement1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = uj.edu.pl.entanglement;
+				PRODUCT_NAME = entanglement;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C9DA28AD1C3970EE00CEF157 /* Build configuration list for PBXProject "entanglement1" */ = {
+		C9DA28AD1C3970EE00CEF157 /* Build configuration list for PBXProject "entanglement" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9DA28C61C3970EE00CEF157 /* Debug */,
@@ -292,7 +293,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9DA28C81C3970EE00CEF157 /* Build configuration list for PBXNativeTarget "entanglement1" */ = {
+		C9DA28C81C3970EE00CEF157 /* Build configuration list for PBXNativeTarget "entanglement" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9DA28C91C3970EE00CEF157 /* Debug */,
