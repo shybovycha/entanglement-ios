@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class GameViewController: UIViewController {
     var game: Game = Game()
@@ -20,6 +21,11 @@ class GameViewController: UIViewController {
     @IBAction func usePocketButtonPressed(sender: UIButton!) {
         self.game.usePocket()
         self.renderer!.update()
+    }
+
+    @IBAction func exitGameAction(sender: AnyObject) {
+        self.exitGame()
+        // self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -50,16 +56,17 @@ class GameViewController: UIViewController {
     }
 
     func showGameOverMessage() {
+        self.exitGame()
         // create the alert
 
-        let alert = UIAlertController(title: "Game Over", message: "You got \(self.points) points. Would you like to play again?", preferredStyle: UIAlertControllerStyle.Alert)
+        /*let alert = UIAlertController(title: "Game Over", message: "You got \(self.points) points. Would you like to play again?", preferredStyle: UIAlertControllerStyle.Alert)
 
         // add the actions (buttons)
         alert.addAction(UIAlertAction(title: "Again!", style: UIAlertActionStyle.Default, handler: self.restartGameHandler))
         alert.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Destructive, handler: self.exitGameHandler))
 
         // show the alert
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
 
     func restartGame() {
@@ -75,7 +82,9 @@ class GameViewController: UIViewController {
     }
 
     func exitGame() {
-        performSegueWithIdentifier("exitGameSegue", sender: self)
+        self.saveResult()
+        self.dismissViewControllerAnimated(true, completion: nil)
+        // self.navigationController?.popViewControllerAnimated(true) // popToRootViewControllerAnimated(true)
     }
 
     func restartGameHandler(action: UIAlertAction!) {
@@ -114,6 +123,54 @@ class GameViewController: UIViewController {
             self.showGameOverMessage()
         } catch {
             print("Shit happens...")
+        }
+    }
+
+    func saveResult() {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+
+        let userFetch = NSFetchRequest(entityName: "CurrentUser")
+
+        var name: String = "Anonymous Player"
+
+        do {
+            let users = try managedContext.executeFetchRequest(userFetch) as! [NSManagedObject]
+
+            if users.count > 0 {
+                name = users.first!.valueForKey("name") as! String
+            }
+        } catch {
+            print("Failed to fetch current user: \(error)")
+        }
+
+        let leaderFetch = NSFetchRequest(entityName: "LeaderboardEntry")
+
+        leaderFetch.predicate = NSPredicate(format: "name = %@", name)
+        leaderFetch.sortDescriptors?.append(NSSortDescriptor(key: "points", ascending: false))
+
+        do {
+            let leaders = try managedContext.executeFetchRequest(leaderFetch) as! [NSManagedObject]
+
+            var leader: NSManagedObject
+
+            if leaders.count > 0 {
+                leader = leaders.first!
+            } else {
+                let entity = NSEntityDescription.entityForName("LeaderboardEntry", inManagedObjectContext:managedContext)
+
+                leader = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+                leader.setValue(0, forKey: "points")
+                leader.setValue(name, forKey: "name")
+            }
+
+            if (leader.valueForKey("points") as! Int) < self.points {
+                leader.setValue(self.points, forKey: "points")
+            }
+
+            appDelegate.saveContext()
+        } catch {
+            print("Failed to update leaderboard: \(error)")
         }
     }
 

@@ -24,45 +24,86 @@
                                     <navigationItem title="Entanglement" id="5ib-1s-69b"/>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tm-Ti-g6S" userLabel="Start Game Button">
+                                <rect key="frame" x="70" y="137" width="455" height="30"/>
+                                <state key="normal" title="Start new game"/>
+                                <connections>
+                                    <action selector="startGameButtonPressed:" destination="awE-7z-awR" eventType="touchUpInside" id="aRb-Mj-Nw3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buj-de-jIq" userLabel="Login Or Logout Button">
+                                <rect key="frame" x="70" y="84" width="460" height="30"/>
+                                <state key="normal" title="Log in with Facebook"/>
+                                <connections>
+                                    <action selector="loginOrLogout" destination="awE-7z-awR" eventType="touchUpInside" id="ecs-1d-6QZ"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HQz-y0-22m">
-                                <rect key="frame" x="10" y="137" width="560" height="443"/>
+                                <rect key="frame" x="10" y="182" width="560" height="398"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="9ho-1G-HdF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="9ho-1G-HdF" customClass="LeaderboardTableViewCell" customModule="entanglement" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9ho-1G-HdF" id="xHV-bj-zCn">
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jP-0U-UtN" userLabel="PointsLabel">
+                                                    <rect key="frame" x="504.5" y="11" width="47.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjJ-JI-ogy" userLabel="NameLabel">
+                                                    <rect key="frame" x="17" y="8" width="45" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hjJ-JI-ogy" firstAttribute="bottom" secondItem="xHV-bj-zCn" secondAttribute="bottomMargin" constant="-6.5" id="GOY-rs-huJ"/>
+                                                <constraint firstItem="4jP-0U-UtN" firstAttribute="top" secondItem="xHV-bj-zCn" secondAttribute="topMargin" constant="3" id="V8g-VK-KbT"/>
+                                                <constraint firstItem="4jP-0U-UtN" firstAttribute="bottom" secondItem="xHV-bj-zCn" secondAttribute="bottomMargin" constant="-3.5" id="Vfd-in-jYb"/>
+                                                <constraint firstItem="hjJ-JI-ogy" firstAttribute="top" secondItem="xHV-bj-zCn" secondAttribute="topMargin" id="krb-c8-4Ws"/>
+                                                <constraint firstItem="hjJ-JI-ogy" firstAttribute="leading" secondItem="xHV-bj-zCn" secondAttribute="leadingMargin" constant="10" id="qLT-Hh-jWw"/>
+                                                <constraint firstItem="4jP-0U-UtN" firstAttribute="trailing" secondItem="xHV-bj-zCn" secondAttribute="trailingMargin" id="xO8-sv-JvG"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="hjJ-JI-ogy" id="NPO-MG-MR9"/>
+                                            <outlet property="pointsLabel" destination="4jP-0U-UtN" id="vCe-3j-czn"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tm-Ti-g6S">
-                                <rect key="frame" x="60" y="77" width="470" height="30"/>
-                                <state key="normal" title="Start new game"/>
+                                <sections/>
                                 <connections>
-                                    <action selector="startOrLogin" destination="awE-7z-awR" eventType="touchUpInside" id="06B-Cf-Flh"/>
+                                    <outlet property="dataSource" destination="awE-7z-awR" id="mQs-XQ-TCP"/>
                                 </connections>
-                            </button>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1tm-Ti-g6S" firstAttribute="top" secondItem="YFb-pc-Eev" secondAttribute="bottom" constant="33" id="4jv-W4-A6s"/>
                             <constraint firstItem="YFb-pc-Eev" firstAttribute="centerX" secondItem="TCr-9J-P4R" secondAttribute="centerX" id="6a7-SK-3bM"/>
-                            <constraint firstItem="1tm-Ti-g6S" firstAttribute="leading" secondItem="HQz-y0-22m" secondAttribute="leading" constant="50" id="DBb-pR-gwq"/>
-                            <constraint firstItem="HQz-y0-22m" firstAttribute="top" secondItem="1tm-Ti-g6S" secondAttribute="bottom" constant="30" id="ESi-Fd-9OK"/>
+                            <constraint firstItem="HQz-y0-22m" firstAttribute="top" secondItem="1tm-Ti-g6S" secondAttribute="bottom" constant="15" id="ESi-Fd-9OK"/>
                             <constraint firstItem="HQz-y0-22m" firstAttribute="trailing" secondItem="TCr-9J-P4R" secondAttribute="trailingMargin" constant="-10" id="Nsp-4E-wLc"/>
+                            <constraint firstItem="buj-de-jIq" firstAttribute="trailing" secondItem="TCr-9J-P4R" secondAttribute="trailingMargin" constant="-50" id="RIP-h1-0NT"/>
                             <constraint firstItem="HQz-y0-22m" firstAttribute="leading" secondItem="TCr-9J-P4R" secondAttribute="leadingMargin" constant="-10" id="bk9-43-pEo"/>
+                            <constraint firstItem="1tm-Ti-g6S" firstAttribute="top" secondItem="buj-de-jIq" secondAttribute="bottom" constant="23" id="bqd-u4-gOV"/>
                             <constraint firstItem="YFb-pc-Eev" firstAttribute="leading" secondItem="TCr-9J-P4R" secondAttribute="leading" id="doj-0D-7IY"/>
                             <constraint firstItem="HQz-y0-22m" firstAttribute="bottom" secondItem="gID-Bd-oWY" secondAttribute="top" constant="-20" id="fMT-ZR-YAG"/>
-                            <constraint firstItem="1tm-Ti-g6S" firstAttribute="trailing" secondItem="TCr-9J-P4R" secondAttribute="trailingMargin" constant="-50" id="h32-dL-yNj"/>
+                            <constraint firstItem="1tm-Ti-g6S" firstAttribute="trailing" secondItem="TCr-9J-P4R" secondAttribute="trailingMargin" constant="-55" id="h32-dL-yNj"/>
                             <constraint firstItem="YFb-pc-Eev" firstAttribute="top" secondItem="TCr-9J-P4R" secondAttribute="top" id="v4N-Q1-61p"/>
+                            <constraint firstItem="1tm-Ti-g6S" firstAttribute="leading" secondItem="TCr-9J-P4R" secondAttribute="leadingMargin" constant="50" id="xrS-0o-7XY"/>
+                            <constraint firstItem="buj-de-jIq" firstAttribute="leading" secondItem="TCr-9J-P4R" secondAttribute="leadingMargin" constant="50" id="xwl-cs-Ihg"/>
+                            <constraint firstItem="buj-de-jIq" firstAttribute="top" secondItem="YFb-pc-Eev" secondAttribute="bottom" constant="40" id="zjH-aQ-C3q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pfW-Sc-b0S"/>
                     <connections>
-                        <outlet property="loginOrStartGameButton" destination="1tm-Ti-g6S" id="VrY-Ox-9CA"/>
+                        <outlet property="loginButton" destination="buj-de-jIq" id="dcH-m3-meW"/>
+                        <outlet property="tableView" destination="HQz-y0-22m" id="mQw-k6-ftP"/>
                         <segue destination="BV1-FR-VrT" kind="show" identifier="startGame" action="showDetailViewController:sender:" id="eyk-sa-USm"/>
                     </connections>
                 </viewController>
@@ -92,7 +133,7 @@
                                     <navigationItem title="Entanglement" id="wJ2-0V-pyF">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="dfG-d9-7yE">
                                             <connections>
-                                                <segue destination="IPU-XA-dZl" kind="unwind" identifier="exitGameSegue" unwindAction="exitGame:" id="XrB-UO-D7S"/>
+                                                <action selector="exitGameAction:" destination="BV1-FR-VrT" id="f4c-ih-iCZ"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -138,9 +179,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
-                <exit id="IPU-XA-dZl" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="426" y="82"/>
+            <point key="canvasLocation" x="385" y="116"/>
         </scene>
     </scenes>
 </document>
