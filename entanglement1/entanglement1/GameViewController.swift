@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CloudKit
 
 class GameViewController: UIViewController {
     var game: Game = Game()
@@ -51,7 +52,8 @@ class GameViewController: UIViewController {
 
     func showGameOverMessage() {
         // create the alert
-        let alert = UIAlertController(title: "Game Over", message: "Would you like to play again?", preferredStyle: UIAlertControllerStyle.Alert)
+
+        let alert = UIAlertController(title: "Game Over", message: "You got \(self.points) points. Would you like to play again?", preferredStyle: UIAlertControllerStyle.Alert)
 
         // add the actions (buttons)
         alert.addAction(UIAlertAction(title: "Again!", style: UIAlertActionStyle.Default, handler: self.restartGameHandler))
@@ -62,8 +64,14 @@ class GameViewController: UIViewController {
     }
 
     func restartGame() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let lx: Int = Int(screenSize.width / 20)
+        let ly: Int = Int(screenSize.height / (ceil(8.0 * sqrt(3))) + 1)
+
+        let tileSize: Int = min(lx, ly)
+
         self.game = Game()
-        self.renderer = GameRenderer(mainView: self.gameView, pocketView: self.pocketView, game: self.game, renderingParams: RenderingParams(sideLength: 20))
+        self.renderer = GameRenderer(mainView: self.gameView, pocketView: self.pocketView, game: self.game, renderingParams: RenderingParams(sideLength: tileSize))
         self.renderer!.update()
     }
 
