@@ -113,7 +113,3 @@ goes on.
 
 You can use those method and create any UI you can imagine *(to display game state)* to create
 your own distribution of the game.
-
-## TODO
-
-The only thing this application is missing is **UI**. It shall be done soon!
