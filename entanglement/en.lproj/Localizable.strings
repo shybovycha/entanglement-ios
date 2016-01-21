@@ -1,0 +1,12 @@
+/* 
+  Localization.strings
+  entanglement
+
+  Created by Artem Szubowicz on 21/01/16.
+  Copyright © 2016 Artem Szubowicz. All rights reserved.
+*/
+
+Daily_notification_message = "Don't forget to play Entanglement today!";
+Anonymous_player_name = "Anonymous Player";
+Log_in_with_facebook = "Log in with Facebook";
+Log_out = "Log out";

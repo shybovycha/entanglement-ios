@@ -25,11 +25,13 @@ class HomeViewController: UIViewController, UITableViewDataSource {
 
     @IBAction func loginOrLogout() {
         if FBSDKAccessToken.currentAccessToken() != nil {
-            FBSDKLoginManager().logOut()
-            self.updateLoginButtonTitle()
-            return
+            self.logOut()
+        } else {
+            self.logIn()
         }
+    }
 
+    func logIn() {
         let login:FBSDKLoginManager = FBSDKLoginManager()
 
         login.logInWithReadPermissions(["public_profile"], fromViewController: self, handler: { (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
@@ -53,6 +55,12 @@ class HomeViewController: UIViewController, UITableViewDataSource {
                 })
             }
         })
+    }
+
+    func logOut() {
+        FBSDKLoginManager().logOut()
+        self.removeCurrentUser()
+        self.updateLoginButtonTitle()
     }
 
     override func viewDidLoad() {
@@ -103,13 +111,33 @@ class HomeViewController: UIViewController, UITableViewDataSource {
     }
 
     func updateLoginButtonTitle() {
-        var title: String = "Log in with Facebook"
+        var title: String = NSLocalizedString("Log_in_with_facebook", comment: "Log in with Facebook")
 
         if FBSDKAccessToken.currentAccessToken() != nil {
-            title = "Log out"
+            title = NSLocalizedString("Log_out", comment: "Log out")
         }
 
         self.loginButton.setTitle(title, forState: .Normal)
+    }
+
+    func removeCurrentUser() {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+
+        let userFetch = NSFetchRequest(entityName: "CurrentUser")
+
+        do {
+            let users = try managedContext.executeFetchRequest(userFetch) as! [NSManagedObject]
+            var currentUser: NSManagedObject
+
+            if users.count > 0 {
+                currentUser = users.first!
+                managedContext.deleteObject(currentUser)
+                appDelegate.saveContext()
+            }
+        } catch {
+            print("Failed to remove current user: \(error)")
+        }
     }
 
     func updateCurrentUser(facebookId: String, name: String) {
@@ -117,9 +145,6 @@ class HomeViewController: UIViewController, UITableViewDataSource {
         let managedContext = appDelegate.managedObjectContext
 
         let userFetch = NSFetchRequest(entityName: "CurrentUser")
-
-        // userFetch.predicate = NSPredicate(format: "name == '%s'", name)
-        // userFetch.sortDescriptors?.append(NSSortDescriptor(key: "points", ascending: false))
 
         do {
             let users = try managedContext.executeFetchRequest(userFetch) as! [NSManagedObject]

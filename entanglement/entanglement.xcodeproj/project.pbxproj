@@ -25,6 +25,7 @@
 		C95840D91C3EF6F60093A1C5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840D81C3EF6F60093A1C5 /* Game.swift */; };
 		C97F026C1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C97F026A1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodeld */; };
 		C97F026E1C3ED37D00574DA8 /* LeaderboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97F026D1C3ED37D00574DA8 /* LeaderboardTableViewCell.swift */; };
+		C98C11281C516E19009F4CBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C98C112A1C516E19009F4CBA /* Localizable.strings */; };
 		C9DA28B61C3970EE00CEF157 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA28B51C3970EE00CEF157 /* AppDelegate.swift */; };
 		C9DA28BC1C3970EE00CEF157 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA28BB1C3970EE00CEF157 /* GameViewController.swift */; };
 		C9DA28BF1C3970EE00CEF157 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9DA28BD1C3970EE00CEF157 /* Main.storyboard */; };
@@ -54,6 +55,10 @@
 		C95840D81C3EF6F60093A1C5 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		C97F026B1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EntanglementModels.xcdatamodel; sourceTree = "<group>"; };
 		C97F026D1C3ED37D00574DA8 /* LeaderboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardTableViewCell.swift; sourceTree = "<group>"; };
+		C98C11241C516C06009F4CBA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Main.strings; sourceTree = "<group>"; };
+		C98C11251C516C06009F4CBA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C98C11291C516E19009F4CBA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C98C112B1C516E1D009F4CBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C9DA28B21C3970EE00CEF157 /* entanglement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = entanglement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9DA28B51C3970EE00CEF157 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9DA28BB1C3970EE00CEF157 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +140,7 @@
 		C9DA28A91C3970EE00CEF157 = {
 			isa = PBXGroup;
 			children = (
+				C98C112A1C516E19009F4CBA /* Localizable.strings */,
 				C9DA28B41C3970EE00CEF157 /* entanglement */,
 				C9DA28B31C3970EE00CEF157 /* Products */,
 				0A61307F15A6B234BB1B701C /* Pods */,
@@ -230,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9DA28C41C3970EE00CEF157 /* LaunchScreen.storyboard in Resources */,
+				C98C11281C516E19009F4CBA /* Localizable.strings in Resources */,
 				C9DA28C11C3970EE00CEF157 /* Assets.xcassets in Resources */,
 				C9DA28BF1C3970EE00CEF157 /* Main.storyboard in Resources */,
 			);
@@ -316,10 +323,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		C98C112A1C516E19009F4CBA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C98C11291C516E19009F4CBA /* pl */,
+				C98C112B1C516E1D009F4CBA /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		C9DA28BD1C3970EE00CEF157 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C9DA28BE1C3970EE00CEF157 /* Base */,
+				C98C11241C516C06009F4CBA /* pl */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -328,6 +345,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C9DA28C31C3970EE00CEF157 /* Base */,
+				C98C11251C516C06009F4CBA /* pl */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

@@ -1,0 +1,24 @@
+
+/* Class = "UIButton"; normalTitle = "Start new game"; ObjectID = "1tm-Ti-g6S"; */
+"1tm-Ti-g6S.normalTitle" = "Zacznij nową grę";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "4jP-0U-UtN"; */
+"4jP-0U-UtN.text" = "Punkty";
+
+/* Class = "UINavigationItem"; title = "Entanglement"; ObjectID = "5ib-1s-69b"; */
+"5ib-1s-69b.title" = "Entanglement";
+
+/* Class = "UIButton"; normalTitle = "Swap"; ObjectID = "E5S-QE-l7C"; */
+"E5S-QE-l7C.normalTitle" = "Zamień";
+
+/* Class = "UIButton"; normalTitle = "Log in with Facebook"; ObjectID = "buj-de-jIq"; */
+"buj-de-jIq.normalTitle" = "Zaloguj się przez Facebook";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "dfG-d9-7yE"; */
+"dfG-d9-7yE.title" = "Cofnij";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "hjJ-JI-ogy"; */
+"hjJ-JI-ogy.text" = "Imię";
+
+/* Class = "UINavigationItem"; title = "Entanglement"; ObjectID = "wJ2-0V-pyF"; */
+"wJ2-0V-pyF.title" = "Entanglement";

@@ -25,7 +25,6 @@ class GameViewController: UIViewController {
 
     @IBAction func exitGameAction(sender: AnyObject) {
         self.exitGame()
-        // self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -43,12 +42,26 @@ class GameViewController: UIViewController {
         let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
         self.gameView.addGestureRecognizer(swipeUpGesture)
+
+        self.setDailyNotification()
     }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
         self.restartGame()
+    }
+
+    func setDailyNotification() {
+        // create a corresponding local notification
+        let notification = UILocalNotification()
+        notification.alertBody = NSLocalizedString("Daily_notification_message", comment: "Don't forget to play Entanglement today!") // text that will be displayed in the notification
+        notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+        notification.repeatInterval = NSCalendarUnit.Day // todo item due date (when notification will be fired)
+        // notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+        // notification.userInfo = ["UUID": item.UUID, ] // assign a unique identifier to the notification so that we can retrieve it later
+        notification.category = "TODO_CATEGORY"
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
 
     func updatePointsLabel() {
@@ -121,7 +134,7 @@ class GameViewController: UIViewController {
 
         let userFetch = NSFetchRequest(entityName: "CurrentUser")
 
-        var name: String = "Anonymous Player"
+        var name: String = NSLocalizedString("Anonymous_player_name", comment: "Anonymous Player")
 
         do {
             let users = try managedContext.executeFetchRequest(userFetch) as! [NSManagedObject]

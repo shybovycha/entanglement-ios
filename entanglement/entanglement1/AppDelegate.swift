@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //
         }
 
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil))
+
         return true
     }
 
