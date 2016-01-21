@@ -15,12 +15,28 @@ import FBSDKLoginKit
 
 class HomeViewController: UIViewController, UITableViewDataSource {
     var leaderboard: [NSManagedObject] = []
+    var sortLeadersBy: String = "points"
+    var sortAscending: Bool = true
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loginButton: UIButton!
 
     @IBAction func startGameButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("startGame", sender: self)
+    }
+
+    @IBAction func sortLeadersByName(sender: AnyObject) {
+        self.sortLeadersBy = "name"
+        self.sortAscending = !self.sortAscending
+        self.updateLeaderboard()
+        self.tableView.reloadData()
+    }
+
+    @IBAction func sortLeadersByPoints(sender: AnyObject) {
+        self.sortLeadersBy = "points"
+        self.sortAscending = !self.sortAscending
+        self.updateLeaderboard()
+        self.tableView.reloadData()
     }
 
     @IBAction func loginOrLogout() {
@@ -98,13 +114,10 @@ class HomeViewController: UIViewController, UITableViewDataSource {
 
         let leadersFetch = NSFetchRequest(entityName: "LeaderboardEntry")
 
-        leadersFetch.sortDescriptors?.append(NSSortDescriptor(key: "points", ascending: false))
+        leadersFetch.sortDescriptors = [NSSortDescriptor(key: self.sortLeadersBy, ascending: self.sortAscending)]
 
         do {
-            let leaders = try managedContext.executeFetchRequest(leadersFetch) as! [NSManagedObject]
-
-            self.leaderboard.removeAll()
-            self.leaderboard.appendContentsOf(leaders)
+            self.leaderboard = try managedContext.executeFetchRequest(leadersFetch) as! [NSManagedObject]
         } catch {
             print("Failed to fetch leaders: \(error)")
         }
