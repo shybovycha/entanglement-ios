@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TileParams {
+open class TileParams {
     var connections: [(Int, Int)]
     var highlight: [(Int, Int)]
     var mark: [(Int, Int)]

@@ -8,6 +8,7 @@
 
 import Foundation
 
-public enum GameError : ErrorType {
-    case GameOver
+public enum GameError : Error {
+    case gameOver
+    case invalidTile
 }

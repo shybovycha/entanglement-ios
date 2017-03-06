@@ -15,7 +15,7 @@ class Path {
         self.expand(u, v: v, input: 0, output: 0)
     }
 
-    func expand(u: Int, v: Int, input: Int, output: Int) {
+    func expand(_ u: Int, v: Int, input: Int, output: Int) {
         self.items.append(PathItem(u: u, v: v, input: input, output: output))
     }
 

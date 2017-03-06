@@ -47,7 +47,7 @@ class Field {
         }
     }
 
-    func findNextPlace(path: Path, nextPlace: (Int, Int)) -> (Int, Int) {
+    func findNextPlace(_ path: Path, nextPlace: (Int, Int)) -> (Int, Int) {
         var u: Int, v: Int
         (u, v) = nextPlace
 
@@ -75,9 +75,9 @@ class Field {
         return self.pathFinished
     }
 
-    func findFuturePath(tile: NonEmptyTile) throws -> (Path, (Int, Int)) {
+    func findFuturePath(_ tile: NonEmptyTile) throws -> (Path, (Int, Int)) {
         if self.isPathFinished() {
-            throw GameError.GameOver
+            throw GameError.gameOver
         }
 
         let tmpPath: Path = Path()
@@ -102,7 +102,7 @@ class Field {
                 break
             }
 
-            tmpPath.expand(u, v: v, input: nextTile.input(lastOutput), output: nextTile.outputFromNeighbourOutput(lastOutput))
+            tmpPath.expand(u, v: v, input: nextTile.input(to: lastOutput), output: try nextTile.outputFromNeighbourOutput(from: lastOutput))
 
             tmpNextPlace = self.findNextPlace(tmpPath, nextPlace: tmpNextPlace)
 
@@ -118,7 +118,7 @@ class Field {
         return (tmpPath, tmpNextPlace)
     }
 
-    func placeTile(tile: NonEmptyTile) {
+    func placeTile(_ tile: NonEmptyTile) throws {
         var u: Int, v: Int
 
         (u, v) = self.nextPlace
@@ -126,8 +126,9 @@ class Field {
 
         while self.tiles[u][v] is NonEmptyTile {
             let lastOutput: Int = self.path.lastOutput()
+            let nextTile: Tile = self.tiles[u][v]
 
-            self.path.expand(u, v: v, input: self.tiles[u][v].input(lastOutput), output: self.tiles[u][v].outputFromNeighbourOutput(lastOutput))
+            self.path.expand(u, v: v, input: self.tiles[u][v].input(to: lastOutput), output: try nextTile.outputFromNeighbourOutput(from: lastOutput))
 
             self.nextPlace = self.findNextPlace(self.path, nextPlace: self.nextPlace)
 

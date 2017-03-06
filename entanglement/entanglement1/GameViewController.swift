@@ -18,12 +18,12 @@ class GameViewController: UIViewController {
     @IBOutlet weak var gameView: UIView!
     @IBOutlet weak var pocketView: UIView!
 
-    @IBAction func usePocketButtonPressed(sender: UIButton!) {
+    @IBAction func usePocketButtonPressed(_ sender: UIButton!) {
         self.game.usePocket()
         self.renderer!.update()
     }
 
-    @IBAction func exitGameAction(sender: AnyObject) {
+    @IBAction func exitGameAction(_ sender: AnyObject) {
         self.exitGame()
     }
 
@@ -32,21 +32,21 @@ class GameViewController: UIViewController {
 
         self.updatePointsLabel()
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: "tapAction:")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(GameViewController.tapAction(_:)))
         self.gameView.addGestureRecognizer(tapGesture)
 
-        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
-        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(GameViewController.swipeDownAction(_:)))
+        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.down
         self.gameView.addGestureRecognizer(swipeDownGesture)
 
-        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
-        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(GameViewController.swipeUpAction(_:)))
+        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.up
         self.gameView.addGestureRecognizer(swipeUpGesture)
 
         self.setDailyNotification()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         self.restartGame()
@@ -57,11 +57,11 @@ class GameViewController: UIViewController {
         let notification = UILocalNotification()
         notification.alertBody = NSLocalizedString("Daily_notification_message", comment: "Don't forget to play Entanglement today!") // text that will be displayed in the notification
         notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
-        notification.repeatInterval = NSCalendarUnit.Day // todo item due date (when notification will be fired)
+        notification.repeatInterval = NSCalendar.Unit.day // todo item due date (when notification will be fired)
         // notification.soundName = UILocalNotificationDefaultSoundName // play default sound
         // notification.userInfo = ["UUID": item.UUID, ] // assign a unique identifier to the notification so that we can retrieve it later
         notification.category = "TODO_CATEGORY"
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        UIApplication.shared.scheduleLocalNotification(notification)
     }
 
     func updatePointsLabel() {
@@ -73,7 +73,7 @@ class GameViewController: UIViewController {
     }
 
     func restartGame() {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let screenSize: CGRect = UIScreen.main.bounds
         let lx: Int = Int(screenSize.width / 20)
         let ly: Int = Int(screenSize.height / (ceil(8.0 * sqrt(3))) + 1)
 
@@ -85,27 +85,26 @@ class GameViewController: UIViewController {
     }
 
     func exitGame() {
-        self.saveResult()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
-    func restartGameHandler(action: UIAlertAction!) {
+    func restartGameHandler(_ action: UIAlertAction!) {
         self.restartGame()
     }
 
-    func exitGameHandler(action: UIAlertAction!) {
+    func exitGameHandler(_ action: UIAlertAction!) {
         self.exitGame()
     }
 
-    func swipeDownAction(sender: UISwipeGestureRecognizer) {
+    func swipeDownAction(_ sender: UISwipeGestureRecognizer) {
         self.renderer!.rotateTileRight()
     }
 
-    func swipeUpAction(sender: UISwipeGestureRecognizer) {
+    func swipeUpAction(_ sender: UISwipeGestureRecognizer) {
         self.renderer!.rotateTileLeft()
     }
 
-    func tapAction(sender: UITapGestureRecognizer) {
+    func tapAction(_ sender: UITapGestureRecognizer) {
         do {
             var pointsGathered: Int = 0
 
@@ -119,76 +118,28 @@ class GameViewController: UIViewController {
             self.updatePointsLabel()
 
             if self.game.isGameOver() {
-                throw GameError.GameOver
+                throw GameError.gameOver
             }
-        } catch GameError.GameOver {
+        } catch GameError.gameOver {
             self.showGameOverMessage()
         } catch {
             print("Shit happens...")
         }
     }
 
-    func saveResult() {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-
-        let userFetch = NSFetchRequest(entityName: "CurrentUser")
-
-        var name: String = NSLocalizedString("Anonymous_player_name", comment: "Anonymous Player")
-
-        do {
-            let users = try managedContext.executeFetchRequest(userFetch) as! [NSManagedObject]
-
-            if users.count > 0 {
-                name = users.first!.valueForKey("name") as! String
-            }
-        } catch {
-            print("Failed to fetch current user: \(error)")
-        }
-
-        let leaderFetch = NSFetchRequest(entityName: "LeaderboardEntry")
-
-        leaderFetch.predicate = NSPredicate(format: "name = %@", name)
-        leaderFetch.sortDescriptors?.append(NSSortDescriptor(key: "points", ascending: false))
-
-        do {
-            let leaders = try managedContext.executeFetchRequest(leaderFetch) as! [NSManagedObject]
-
-            var leader: NSManagedObject
-
-            if leaders.count > 0 {
-                leader = leaders.first!
-            } else {
-                let entity = NSEntityDescription.entityForName("LeaderboardEntry", inManagedObjectContext:managedContext)
-
-                leader = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-                leader.setValue(0, forKey: "points")
-                leader.setValue(name, forKey: "name")
-            }
-
-            if (leader.valueForKey("points") as! Int) < self.points {
-                leader.setValue(self.points, forKey: "points")
-            }
-
-            appDelegate.saveContext()
-        } catch {
-            print("Failed to update leaderboard: \(error)")
-        }
-    }
-
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return false
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Portrait
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return .portrait
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }

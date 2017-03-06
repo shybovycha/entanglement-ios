@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Game {
+open class Game {
     var field: Field = Field()
     var pocket: NonEmptyTile = NonEmptyTile()
     var nextTile: NonEmptyTile = NonEmptyTile()
@@ -39,10 +39,10 @@ public class Game {
 
     func placeTile() throws {
         if isGameOver() {
-            throw GameError.GameOver
+            throw GameError.gameOver
         }
 
-        self.field.placeTile(self.nextTile)
+        try self.field.placeTile(self.nextTile)
         self.nextTile = self.generateTile()
     }
 
@@ -54,10 +54,10 @@ public class Game {
         for _ in 0...5 {
             var i = Int(arc4random_uniform(UInt32(pool.count)))
             let a = pool[i]
-            pool.removeAtIndex(i)
+            pool.remove(at: i)
             i = Int(arc4random_uniform(UInt32(pool.count)))
             let b = pool[i]
-            pool.removeAtIndex(i)
+            pool.remove(at: i)
 
             tile.connections.append((a, b))
         }

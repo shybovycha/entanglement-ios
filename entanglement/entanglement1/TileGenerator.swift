@@ -45,7 +45,7 @@ class TileGenerator {
         self.centerY = (self.height / 2) + (self.stroke * 0)
     }
 
-    func uv2xy(uv: (Int, Int)) -> (Int, Int) {
+    func uv2xy(_ uv: (Int, Int)) -> (Int, Int) {
         let u = uv.0, v = uv.1
         let kx = Float(u - v) * (3.0 / 2.0)
         let ky = Float(u + v) * (sqrt(3.0) / 2.0)
@@ -58,7 +58,7 @@ class TileGenerator {
         return (cx + x, cy - y)
     }
 
-    func emptyTile(tileParams: TileParams) -> UIImage {
+    func emptyTile(_ tileParams: TileParams) -> UIImage {
         let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
@@ -70,10 +70,10 @@ class TileGenerator {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return image
+        return image!
     }
 
-    func nonEmptyTile(tileParams: TileParams) -> UIImage {
+    func nonEmptyTile(_ tileParams: TileParams) -> UIImage {
         let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
@@ -82,10 +82,10 @@ class TileGenerator {
         let context = UIGraphicsGetCurrentContext()
 
         // draw outer shape
-        let shapePathRef: CGMutablePathRef = CGPathCreateMutable()
+        let shapePathRef: CGMutablePath = CGMutablePath()
 
-        CGContextSetFillColorWithColor(context, UIColor(red: 0.88, green: 0.88, blue: 0.88, alpha: 1.0).CGColor)
-        CGContextSetLineJoin(context, CGLineJoin.Round)
+        context?.setFillColor(UIColor(red: 0.88, green: 0.88, blue: 0.88, alpha: 1.0).cgColor)
+        context?.setLineJoin(CGLineJoin.round)
 
         for i in 1...(self.vertices.count - 1) {
             let x1 = CGFloat(Float(self.vertices[i].0) * self.scaleCoefficient + Float(self.stroke * 2))
@@ -94,30 +94,31 @@ class TileGenerator {
             if i == 1 {
                 let x0 = CGFloat(Float(self.vertices[i - 1].0) * self.scaleCoefficient + Float(self.stroke * 2))
                 let y0 = CGFloat(Float(self.vertices[i - 1].1) * self.scaleCoefficient + Float(self.stroke * 2))
-                CGPathMoveToPoint(shapePathRef, nil, x0, y0)
+
+                shapePathRef.move(to: CGPoint(x: x0, y: y0))
             }
 
-            CGPathAddLineToPoint(shapePathRef, nil, x1, y1)
+            shapePathRef.addLine(to: CGPoint(x: x1, y: y1))
         }
 
-        CGPathCloseSubpath(shapePathRef)
+        shapePathRef.closeSubpath()
 
-        CGContextAddPath(context, shapePathRef)
-        CGContextFillPath(context)
+        context?.addPath(shapePathRef)
+        context?.fillPath()
 
         // draw connections
         for (c0, c1) in tileParams.connections {
-            CGContextSetLineWidth(context, CGFloat(self.pathStroke))
+            context?.setLineWidth(CGFloat(self.pathStroke))
 
-            let connectionPathRef: CGMutablePathRef = CGPathCreateMutable()
+            let connectionPathRef: CGMutablePath = CGMutablePath()
             var pathColor: CGColor
 
-            if tileParams.mark.contains({ ($0.0 == c0 && $0.1 == c1) || ($0.0 == c1 && $0.1 == c0) }) {
-                pathColor = self.markPathColor.CGColor
-            } else if tileParams.highlight.contains({ ($0.0 == c0 && $0.1 == c1) || ($0.0 == c1 && $0.1 == c0) }) {
-                pathColor = self.highlightPathColor.CGColor
+            if tileParams.mark.contains(where: { ($0.0 == c0 && $0.1 == c1) || ($0.0 == c1 && $0.1 == c0) }) {
+                pathColor = self.markPathColor.cgColor
+            } else if tileParams.highlight.contains(where: { ($0.0 == c0 && $0.1 == c1) || ($0.0 == c1 && $0.1 == c0) }) {
+                pathColor = self.highlightPathColor.cgColor
             } else {
-                pathColor = self.pathColor.CGColor
+                pathColor = self.pathColor.cgColor
             }
 
             let p0x = CGFloat(Float(self.pins[c0].0) * self.scaleCoefficient + Float(self.stroke * 2))
@@ -125,37 +126,36 @@ class TileGenerator {
 
             let p1x = CGFloat(Float(self.pins[c1].0) * self.scaleCoefficient + Float(self.stroke * 2))
             let p1y = CGFloat(Float(self.pins[c1].1) * self.scaleCoefficient + Float(self.stroke * 2))
-
-            CGPathMoveToPoint(connectionPathRef, nil, p0x, p0y)
-            CGPathAddQuadCurveToPoint(connectionPathRef, nil, CGFloat(self.centerX), CGFloat(self.centerY), p1x, p1y)
+            
+            connectionPathRef.move(to: CGPoint(x: p0x, y: p0y))
+            connectionPathRef.addQuadCurve(to: CGPoint(x: p1x, y: p1y), control: CGPoint(x: self.centerX, y: self.centerY))
 
             // CGPathCloseSubpath(connectionPathRef)
-            CGContextSetLineWidth(context, CGFloat(Float(self.pathStroke) * 1.25))
-            CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
-            CGContextAddPath(context, connectionPathRef)
-            CGContextStrokePath(context)
+            context?.setLineWidth(CGFloat(Float(self.pathStroke) * 1.25))
+            context?.setStrokeColor(UIColor.black.cgColor)
+            context?.addPath(connectionPathRef)
+            context?.strokePath()
 
-
-            CGContextSetLineWidth(context, CGFloat(self.pathStroke))
-            CGContextSetStrokeColorWithColor(context, pathColor)
-            CGContextAddPath(context, connectionPathRef)
-            CGContextStrokePath(context)
+            context?.setLineWidth(CGFloat(self.pathStroke))
+            context?.setStrokeColor(pathColor)
+            context?.addPath(connectionPathRef)
+            context?.strokePath()
         }
 
         // stroke out the outer shape to cover the paths
-        CGContextSetStrokeColorWithColor(context, self.strokeColor.CGColor)
-        CGContextSetLineWidth(context, CGFloat(Float(self.stroke)))
-        CGContextAddPath(context, shapePathRef)
-        CGContextStrokePath(context)
+        context?.setStrokeColor(self.strokeColor.cgColor)
+        context?.setLineWidth(CGFloat(Float(self.stroke)))
+        context?.addPath(shapePathRef)
+        context?.strokePath()
 
         // finish drawing
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return image
+        return image!
     }
 
-    func borderTile(tileParams: TileParams) -> UIImage {
+    func borderTile(_ tileParams: TileParams) -> UIImage {
         let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
@@ -164,10 +164,10 @@ class TileGenerator {
         let context = UIGraphicsGetCurrentContext()
 
         // draw outer shape
-        let shapePathRef: CGMutablePathRef = CGPathCreateMutable()
+        let shapePathRef: CGMutablePath = CGMutablePath()
 
-        CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor)
-        CGContextSetLineJoin(context, CGLineJoin.Round)
+        context?.setFillColor(UIColor.black.cgColor)
+        context?.setLineJoin(CGLineJoin.round)
 
         for i in 1...(self.vertices.count - 1) {
             let x1 = CGFloat(Float(self.vertices[i].0) * self.scaleCoefficient + Float(self.stroke * 2))
@@ -176,25 +176,26 @@ class TileGenerator {
             if i == 1 {
                 let x0 = CGFloat(Float(self.vertices[i - 1].0) * self.scaleCoefficient + Float(self.stroke * 2))
                 let y0 = CGFloat(Float(self.vertices[i - 1].1) * self.scaleCoefficient + Float(self.stroke * 2))
-                CGPathMoveToPoint(shapePathRef, nil, x0, y0)
+                
+                shapePathRef.move(to: CGPoint(x: x0, y: y0))
             }
 
-            CGPathAddLineToPoint(shapePathRef, nil, x1, y1)
+            shapePathRef.addLine(to: CGPoint(x: x1, y: y1))
         }
 
-        CGPathCloseSubpath(shapePathRef)
+        shapePathRef.closeSubpath()
 
-        CGContextAddPath(context, shapePathRef)
-        CGContextFillPath(context)
+        context?.addPath(shapePathRef)
+        context?.fillPath()
 
         // finish drawing
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return image
+        return image!
     }
 
-    func zeroTile(tileParams: TileParams) -> UIImage {
+    func zeroTile(_ tileParams: TileParams) -> UIImage {
         let size = CGSize(width: self.width, height: self.height)
         let opaque = false
         let scale: CGFloat = 0
@@ -203,10 +204,10 @@ class TileGenerator {
         let context = UIGraphicsGetCurrentContext()
 
         // draw outer shape
-        let shapePathRef: CGMutablePathRef = CGPathCreateMutable()
+        let shapePathRef: CGMutablePath = CGMutablePath()
 
-        CGContextSetFillColorWithColor(context, UIColor(red: 0.65, green: 0.9, blue: 0.9, alpha: 1.0).CGColor)
-        CGContextSetLineJoin(context, CGLineJoin.Round)
+        context?.setFillColor(UIColor(red: 0.65, green: 0.9, blue: 0.9, alpha: 1.0).cgColor)
+        context?.setLineJoin(CGLineJoin.round)
 
         for i in 1...(self.vertices.count - 1) {
             let x1 = CGFloat(Float(self.vertices[i].0) * self.scaleCoefficient + Float(self.stroke * 2))
@@ -215,27 +216,27 @@ class TileGenerator {
             if i == 1 {
                 let x0 = CGFloat(Float(self.vertices[i - 1].0) * self.scaleCoefficient + Float(self.stroke * 2))
                 let y0 = CGFloat(Float(self.vertices[i - 1].1) * self.scaleCoefficient + Float(self.stroke * 2))
-                CGPathMoveToPoint(shapePathRef, nil, x0, y0)
+                shapePathRef.move(to: CGPoint(x: x0, y: y0))
             }
 
-            CGPathAddLineToPoint(shapePathRef, nil, x1, y1)
+            shapePathRef.addLine(to: CGPoint(x: x1, y: y1))
         }
 
-        CGPathCloseSubpath(shapePathRef)
+        shapePathRef.closeSubpath()
 
-        CGContextAddPath(context, shapePathRef)
-        CGContextFillPath(context)
+        context?.addPath(shapePathRef)
+        context?.fillPath()
 
         // stroke out the outer shape to cover the paths
-        CGContextSetStrokeColorWithColor(context, self.strokeColor.CGColor)
-        CGContextSetLineWidth(context, CGFloat(Float(self.stroke * 2)))
-        CGContextAddPath(context, shapePathRef)
-        CGContextStrokePath(context)
+        context?.setStrokeColor(self.strokeColor.cgColor)
+        context?.setLineWidth(CGFloat(Float(self.stroke * 2)))
+        context?.addPath(shapePathRef)
+        context?.strokePath()
         
         // finish drawing
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
 }

@@ -23,7 +23,6 @@
 		C95840D51C3EF6D50093A1C5 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840D41C3EF6D50093A1C5 /* Field.swift */; };
 		C95840D71C3EF6E50093A1C5 /* GameError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840D61C3EF6E50093A1C5 /* GameError.swift */; };
 		C95840D91C3EF6F60093A1C5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840D81C3EF6F60093A1C5 /* Game.swift */; };
-		C97F026C1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C97F026A1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodeld */; };
 		C97F026E1C3ED37D00574DA8 /* LeaderboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97F026D1C3ED37D00574DA8 /* LeaderboardTableViewCell.swift */; };
 		C98C11281C516E19009F4CBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C98C112A1C516E19009F4CBA /* Localizable.strings */; };
 		C9DA28B61C3970EE00CEF157 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA28B51C3970EE00CEF157 /* AppDelegate.swift */; };
@@ -31,12 +30,9 @@
 		C9DA28BF1C3970EE00CEF157 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9DA28BD1C3970EE00CEF157 /* Main.storyboard */; };
 		C9DA28C11C3970EE00CEF157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9DA28C01C3970EE00CEF157 /* Assets.xcassets */; };
 		C9DA28C41C3970EE00CEF157 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9DA28C21C3970EE00CEF157 /* LaunchScreen.storyboard */; };
-		D6DB8DA332BC2068F7340FFB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E0A8440C74125500446CEC /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		37E0A8440C74125500446CEC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B67D14BCB04DB7F37ADCBF96 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C9364B6F1C3C185600A928CC /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C95840BC1C3EF5BB0093A1C5 /* RenderingParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingParams.swift; sourceTree = "<group>"; };
 		C95840BE1C3EF5D70093A1C5 /* TileParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileParams.swift; sourceTree = "<group>"; };
@@ -53,7 +49,6 @@
 		C95840D41C3EF6D50093A1C5 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 		C95840D61C3EF6E50093A1C5 /* GameError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameError.swift; sourceTree = "<group>"; };
 		C95840D81C3EF6F60093A1C5 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		C97F026B1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EntanglementModels.xcdatamodel; sourceTree = "<group>"; };
 		C97F026D1C3ED37D00574DA8 /* LeaderboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardTableViewCell.swift; sourceTree = "<group>"; };
 		C98C11241C516C06009F4CBA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Main.strings; sourceTree = "<group>"; };
 		C98C11251C516C06009F4CBA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -66,7 +61,6 @@
 		C9DA28C01C3970EE00CEF157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9DA28C31C3970EE00CEF157 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C9DA28C51C3970EE00CEF157 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D7019394D61A1B9F88209D0E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,26 +68,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6DB8DA332BC2068F7340FFB /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A61307F15A6B234BB1B701C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B67D14BCB04DB7F37ADCBF96 /* Pods.debug.xcconfig */,
-				D7019394D61A1B9F88209D0E /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		5DE81F63FB36B769CBE82993 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37E0A8440C74125500446CEC /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,7 +126,6 @@
 				C98C112A1C516E19009F4CBA /* Localizable.strings */,
 				C9DA28B41C3970EE00CEF157 /* entanglement */,
 				C9DA28B31C3970EE00CEF157 /* Products */,
-				0A61307F15A6B234BB1B701C /* Pods */,
 				5DE81F63FB36B769CBE82993 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -167,7 +149,6 @@
 				C9DA28C01C3970EE00CEF157 /* Assets.xcassets */,
 				C9DA28C21C3970EE00CEF157 /* LaunchScreen.storyboard */,
 				C9DA28C51C3970EE00CEF157 /* Info.plist */,
-				C97F026A1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodeld */,
 			);
 			name = entanglement;
 			path = entanglement1;
@@ -180,12 +161,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9DA28C81C3970EE00CEF157 /* Build configuration list for PBXNativeTarget "entanglement" */;
 			buildPhases = (
-				0431FBDC2B5C02206A996631 /* Check Pods Manifest.lock */,
 				C9DA28AE1C3970EE00CEF157 /* Sources */,
 				C9DA28AF1C3970EE00CEF157 /* Frameworks */,
 				C9DA28B01C3970EE00CEF157 /* Resources */,
-				4742DAD32FB0F191C83C3D4A /* Embed Pods Frameworks */,
-				25BBD42F219FFF0A2FD02E01 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,12 +181,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Artem Szubowicz";
 				TargetAttributes = {
 					C9DA28B11C3970EE00CEF157 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 785WBPW3NL;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -244,60 +223,11 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0431FBDC2B5C02206A996631 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		25BBD42F219FFF0A2FD02E01 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4742DAD32FB0F191C83C3D4A /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		C9DA28AE1C3970EE00CEF157 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C97F026C1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodeld in Sources */,
 				C95840C91C3EF6790093A1C5 /* BorderTile.swift in Sources */,
 				C9364B701C3C185600A928CC /* HomeViewController.swift in Sources */,
 				C95840BD1C3EF5BB0093A1C5 /* RenderingParams.swift in Sources */,
@@ -357,6 +287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -366,8 +297,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -402,6 +335,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -411,8 +345,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -431,6 +367,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -438,25 +375,27 @@
 		};
 		C9DA28C91C3970EE00CEF157 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B67D14BCB04DB7F37ADCBF96 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 785WBPW3NL;
 				INFOPLIST_FILE = entanglement1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uj.edu.pl.entanglement;
 				PRODUCT_NAME = entanglement;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		C9DA28CA1C3970EE00CEF157 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7019394D61A1B9F88209D0E /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 785WBPW3NL;
 				INFOPLIST_FILE = entanglement1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uj.edu.pl.entanglement;
 				PRODUCT_NAME = entanglement;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -482,19 +421,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		C97F026A1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				C97F026B1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodel */,
-			);
-			currentVersion = C97F026B1C3ECB8D00574DA8 /* EntanglementModels.xcdatamodel */;
-			path = EntanglementModels.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = C9DA28AA1C3970EE00CEF157 /* Project object */;
 }

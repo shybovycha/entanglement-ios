@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class GameRenderer {
+open class GameRenderer {
     var game: Game
     var tileGenerator: TileGenerator
     var view: UIView
@@ -25,30 +25,30 @@ public class GameRenderer {
         self.tileGenerator = TileGenerator(renderingParams: renderingParams)
     }
 
-    public func rotateTileRight() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.nextTileView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 3.0))
+    open func rotateTileRight() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.nextTileView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI / 3.0))
             }, completion: {finished in
                 self.game.rotateTileRight()
                 self.update()
         })
     }
 
-    public func rotateTileLeft() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.nextTileView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / -3.0))
+    open func rotateTileLeft() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.nextTileView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI / -3.0))
             }, completion: {finished in
                 self.game.rotateTileLeft()
                 self.update()
         })
     }
 
-    public func update() {
+    open func update() {
         self.renderField()
         self.renderPocket()
     }
 
-    private func renderPocket() {
+    fileprivate func renderPocket() {
         if self.pocketTileView != nil {
             self.pocketTileView!.removeFromSuperview()
         }
@@ -68,7 +68,7 @@ public class GameRenderer {
         self.pocketContainerView.addSubview(imageView)
     }
 
-    private func renderField() {
+    fileprivate func renderField() {
         for subview in self.subviews {
             subview.removeFromSuperview()
         }
@@ -95,7 +95,7 @@ public class GameRenderer {
         }
     }
 
-    private func generate(position: (Int, Int)) -> UIImage {
+    fileprivate func generate(_ position: (Int, Int)) -> UIImage {
         let u = position.0, v = position.1
         var tile: Tile
 
@@ -123,7 +123,7 @@ public class GameRenderer {
             for p in pathItems {
                 highlight.append((p.input, p.output))
             }
-        } catch GameError.GameOver {
+        } catch GameError.gameOver {
         } catch {
         }
 

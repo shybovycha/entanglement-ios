@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class RenderingParams {
+open class RenderingParams {
     var sideLength: Int
     var stroke: Int = 1
     var pathStroke: Int = 4
@@ -22,7 +22,7 @@ public class RenderingParams {
         stroke: Int = 1,
         pathStroke: Int = 4,
         strokeColor: UIColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0),
-        pathColor: UIColor = UIColor.whiteColor(),
+        pathColor: UIColor = UIColor.white,
         highlightPathColor: UIColor = UIColor(red: 0.9, green: 0.5, blue: 0.5, alpha: 1.0),
         markPathColor: UIColor = UIColor(red: 0.9, green: 0.15, blue: 0.15, alpha: 1.0)) {
             self.sideLength = sideLength
