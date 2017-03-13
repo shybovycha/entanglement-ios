@@ -126,7 +126,7 @@ class TileImageGenerator {
 
             let p1x = CGFloat(Float(self.pins[c1].0) * self.scaleCoefficient + Float(self.stroke * 2))
             let p1y = CGFloat(Float(self.pins[c1].1) * self.scaleCoefficient + Float(self.stroke * 2))
-            
+
             connectionPathRef.move(to: CGPoint(x: p0x, y: p0y))
             connectionPathRef.addQuadCurve(to: CGPoint(x: p1x, y: p1y), control: CGPoint(x: self.centerX, y: self.centerY))
 
@@ -176,7 +176,7 @@ class TileImageGenerator {
             if i == 1 {
                 let x0 = CGFloat(Float(self.vertices[i - 1].0) * self.scaleCoefficient + Float(self.stroke * 2))
                 let y0 = CGFloat(Float(self.vertices[i - 1].1) * self.scaleCoefficient + Float(self.stroke * 2))
-                
+
                 shapePathRef.move(to: CGPoint(x: x0, y: y0))
             }
 
@@ -232,11 +232,11 @@ class TileImageGenerator {
         context?.setLineWidth(CGFloat(Float(self.stroke * 2)))
         context?.addPath(shapePathRef)
         context?.strokePath()
-        
+
         // finish drawing
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+
         return image!
     }
 }

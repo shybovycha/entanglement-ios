@@ -11,7 +11,7 @@
 		C95840BD1C3EF5BB0093A1C5 /* RenderingParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840BC1C3EF5BB0093A1C5 /* RenderingParams.swift */; };
 		C95840BF1C3EF5D70093A1C5 /* TileParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840BE1C3EF5D70093A1C5 /* TileParams.swift */; };
 		C95840C11C3EF6020093A1C5 /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840C01C3EF6020093A1C5 /* GameRenderer.swift */; };
-		C95840C31C3EF6210093A1C5 /* TileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840C21C3EF6210093A1C5 /* TileGenerator.swift */; };
+		C95840C31C3EF6210093A1C5 /* TileImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840C21C3EF6210093A1C5 /* TileImageGenerator.swift */; };
 		C95840C51C3EF6540093A1C5 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840C41C3EF6540093A1C5 /* Tile.swift */; };
 		C95840C71C3EF6670093A1C5 /* ZeroTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840C61C3EF6670093A1C5 /* ZeroTile.swift */; };
 		C95840C91C3EF6790093A1C5 /* BorderTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95840C81C3EF6790093A1C5 /* BorderTile.swift */; };
@@ -37,7 +37,7 @@
 		C95840BC1C3EF5BB0093A1C5 /* RenderingParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingParams.swift; sourceTree = "<group>"; };
 		C95840BE1C3EF5D70093A1C5 /* TileParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileParams.swift; sourceTree = "<group>"; };
 		C95840C01C3EF6020093A1C5 /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
-		C95840C21C3EF6210093A1C5 /* TileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileGenerator.swift; sourceTree = "<group>"; };
+		C95840C21C3EF6210093A1C5 /* TileImageGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileImageGenerator.swift; sourceTree = "<group>"; };
 		C95840C41C3EF6540093A1C5 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		C95840C61C3EF6670093A1C5 /* ZeroTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroTile.swift; sourceTree = "<group>"; };
 		C95840C81C3EF6790093A1C5 /* BorderTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderTile.swift; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 			children = (
 				C95840BC1C3EF5BB0093A1C5 /* RenderingParams.swift */,
 				C95840C01C3EF6020093A1C5 /* GameRenderer.swift */,
-				C95840C21C3EF6210093A1C5 /* TileGenerator.swift */,
+				C95840C21C3EF6210093A1C5 /* TileImageGenerator.swift */,
 			);
 			name = Renderer;
 			sourceTree = "<group>";
@@ -239,7 +239,7 @@
 				C95840D71C3EF6E50093A1C5 /* GameError.swift in Sources */,
 				C95840D51C3EF6D50093A1C5 /* Field.swift in Sources */,
 				C95840BF1C3EF5D70093A1C5 /* TileParams.swift in Sources */,
-				C95840C31C3EF6210093A1C5 /* TileGenerator.swift in Sources */,
+				C95840C31C3EF6210093A1C5 /* TileImageGenerator.swift in Sources */,
 				C95840CD1C3EF6950093A1C5 /* PlaceholderTile.swift in Sources */,
 				C95840C11C3EF6020093A1C5 /* GameRenderer.swift in Sources */,
 				C95840D91C3EF6F60093A1C5 /* Game.swift in Sources */,

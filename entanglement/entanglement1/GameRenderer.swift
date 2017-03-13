@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-open class GameRenderer {
+public class GameRenderer {
     var game: Game
-    var tileGenerator: TileGenerator
+    var tileImageGenerator: TileImageGenerator
     var view: UIView
     var pocketContainerView: UIView
     var pocketTileView: UIView? = nil
@@ -22,10 +22,10 @@ open class GameRenderer {
         self.view = mainView
         self.pocketContainerView = pocketView
         self.game = game
-        self.tileGenerator = TileGenerator(renderingParams: renderingParams)
+        self.tileImageGenerator = TileImageGenerator(renderingParams: renderingParams)
     }
 
-    open func rotateTileRight() {
+    public func rotateTileRight() {
         UIView.animate(withDuration: 0.3, animations: {
             self.nextTileView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI / 3.0))
             }, completion: {finished in
@@ -34,7 +34,7 @@ open class GameRenderer {
         })
     }
 
-    open func rotateTileLeft() {
+    public func rotateTileLeft() {
         UIView.animate(withDuration: 0.3, animations: {
             self.nextTileView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI / -3.0))
             }, completion: {finished in
@@ -43,19 +43,19 @@ open class GameRenderer {
         })
     }
 
-    open func update() {
+    public func update() {
         self.renderField()
         self.renderPocket()
     }
 
-    fileprivate func renderPocket() {
+    private func renderPocket() {
         if self.pocketTileView != nil {
             self.pocketTileView!.removeFromSuperview()
         }
 
         var (x, y) = (self.pocketContainerView.frame.size.width, self.pocketContainerView.frame.height)
 
-        let image = self.tileGenerator.nonEmptyTile(TileParams(connections: self.game.pocket.connections))
+        let image = self.tileImageGenerator.nonEmptyTile(TileParams(connections: self.game.pocket.connections))
 
         x = (x / 2) - (image.size.width / 2)
         y = (y / 2) - (image.size.height / 2)
@@ -68,7 +68,7 @@ open class GameRenderer {
         self.pocketContainerView.addSubview(imageView)
     }
 
-    fileprivate func renderField() {
+    private func renderField() {
         for subview in self.subviews {
             subview.removeFromSuperview()
         }
@@ -77,8 +77,8 @@ open class GameRenderer {
 
         for u in 0...(self.game.field.tiles.count - 1) {
             for v in 0...(self.game.field.tiles[u].count - 1) {
-                let (x, y) = self.tileGenerator.uv2xy(u, v)
-                let image = self.generate((u, v))
+                let (x, y) = self.tileImageGenerator.uv2xy(u, v)
+                let image = self.generate(position: (u, v))
 
                 let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: x, y: y), size: image.size))
 
@@ -95,7 +95,7 @@ open class GameRenderer {
         }
     }
 
-    fileprivate func generate(_ position: (Int, Int)) -> UIImage {
+    private func generateTileParams(_ position: (Int, Int)) -> TileParams {
         let u = position.0, v = position.1
         var tile: Tile
 
@@ -127,20 +127,31 @@ open class GameRenderer {
         } catch {
         }
 
-        let tileParams = TileParams(connections: tile.connections, highlight: highlight, mark: mark)
+        return TileParams(connections: tile.connections, highlight: highlight, mark: mark)
+    }
 
+    private func generateTileImage(tile: Tile, tileParams: TileParams) -> UIImage {
         if tile is BorderTile {
-            return self.tileGenerator.borderTile(tileParams)
+            return self.tileImageGenerator.borderTile(tileParams)
         }
 
         if tile is ZeroTile {
-            return self.tileGenerator.zeroTile(tileParams)
+            return self.tileImageGenerator.zeroTile(tileParams)
         }
-        
+
         if tile is NonEmptyTile || tile is PlaceholderTile {
-            return self.tileGenerator.nonEmptyTile(tileParams)
+            return self.tileImageGenerator.nonEmptyTile(tileParams)
         }
-        
-        return self.tileGenerator.emptyTile(tileParams)
+
+        return self.tileImageGenerator.emptyTile(tileParams)
+    }
+
+    private func generate(position: (Int, Int)) -> UIImage {
+        let (u, v) = position
+
+        let tileParams = self.generateTileParams(position)
+        let tile = self.game.field.tiles[u][v]
+
+        return generateTileImage(tile: tile, tileParams: tileParams)
     }
 }

@@ -147,13 +147,13 @@ class Field {
             self.pathFinished = true
         }
     }
-    
+
     func render() {
         for row in self.tiles {
             for tile in row {
                 tile.render()
             }
-            
+
             print("")
         }
     }

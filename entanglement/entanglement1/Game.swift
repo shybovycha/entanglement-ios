@@ -73,7 +73,7 @@ open class Game {
         for i in 0...futurePath.items.count - 1 {
             points += i + 1
         }
-        
+
         return points
     }
 }
