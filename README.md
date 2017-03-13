@@ -11,6 +11,8 @@ in your pocket.
 
 ![Screenshot](https://raw.githubusercontent.com/shybovycha/entanglement-ios/master/screen1.png)
 
+**Note:** more detailed application internals overview you can find on [my blog](http://shybovycha.github.io/2017/03/13/entanglement.html).
+
 ## Architecture
 
 The board is represented as a two-dimensional array of `Tile` objects.
@@ -27,20 +29,20 @@ Order for those numbers does not matter inside `connections` array.
 But it does matter in the meaning of the whole tile:
 
 ```
-      --c0------c1---      
-     /               \     
-  c11                 c2   
-   /                   \   
-  /                     \  
-c10                     c3 
+      --c0------c1---
+     /               \
+  c11                 c2
+   /                   \
+  /                     \
+c10                     c3
 /                         \
 \                         /
-c9                      c4 
-  \                     /  
-   \                   /   
-    c8               c5    
-     \               /     
-      --c7------c6---     
+c9                      c4
+  \                     /
+   \                   /
+    c8               c5
+     \               /
+      --c7------c6---
 ```
 
 Here, if you join, say, `c0` and `c5`, you shall got the line fragment.
