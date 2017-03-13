@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TileGenerator {
+class TileImageGenerator {
     var sideLength: Int
     var stroke: Int
     var pathStroke: Int
